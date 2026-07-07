@@ -38,9 +38,9 @@ export default function HomePage() {
         <div className="cv-auto">
           <Projects />
         </div>
-        <div className="cv-auto">
-          <Process />
-        </div>
+        {/* No cv-auto here: the scroll-driven sticky track must keep its
+            real height so scroll progress maps correctly to stages. */}
+        <Process />
         <div className="cv-auto">
           <AISection />
         </div>
