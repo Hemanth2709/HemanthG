@@ -5,16 +5,22 @@ import { site, socials } from "@/data/site";
 
 import "./globals.css";
 
+/**
+ * display: "optional" — text renders immediately with the size-adjusted
+ * fallback and never reflows on a late font arrival, so LCP is recorded
+ * at first paint instead of at font swap. Fonts are self-hosted by
+ * next/font and preloaded, so they win the race on real connections.
+ */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap",
+  display: "optional",
 });
 
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-  display: "swap",
+  display: "optional",
 });
 
 const instrument = Instrument_Serif({
@@ -22,7 +28,7 @@ const instrument = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
   variable: "--font-instrument",
-  display: "swap",
+  display: "optional",
 });
 
 export const metadata: Metadata = {

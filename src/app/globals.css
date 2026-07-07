@@ -11,7 +11,7 @@
   --color-raised: #14161c;
   --color-foreground: #f4f5f7;
   --color-muted: #9ba1ad;
-  --color-subtle: #6b7280;
+  --color-subtle: #7d8494; /* ≥4.5:1 on --color-background (WCAG AA) */
   --color-line: rgba(255, 255, 255, 0.08);
   --color-line-strong: rgba(255, 255, 255, 0.14);
   --color-accent: #8b93ff;
@@ -71,6 +71,68 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+/* Hero particle field — transform/opacity only, GPU-composited */
+@keyframes particle-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: var(--p-min, 0.2);
+  }
+  25% {
+    opacity: var(--p-max, 0.7);
+  }
+  50% {
+    transform: translate3d(var(--p-x, 20px), var(--p-y, -60px), 0) scale(var(--p-s, 1.4));
+    opacity: var(--p-max, 0.7);
+  }
+  75% {
+    opacity: var(--p-min, 0.2);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: var(--p-min, 0.2);
+  }
+}
+
+/* Entrance animations for above-the-fold content (no JS dependency).
+   LCP-safe: the headline variant animates transform only, never opacity. */
+@keyframes rise-only {
+  from {
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes rise-fade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -172,4 +234,122 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--color-accent);
+}
+
+/* Skip rendering work for below-the-fold sections until they approach
+   the viewport. contain-intrinsic-size reserves space so scrollbar and
+   layout stay stable (no CLS). */
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* Container-query context: cards size against their container, so
+   responsive changes never depend on (and never shift) page layout. */
+@utility cq {
+  container-type: inline-size;
+}
+
+/* Above-the-fold entrance helpers. --enter-delay staggers children. */
+@utility anim-rise {
+  animation: rise-fade 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+@utility anim-rise-lcp {
+  /* transform-only: element is painted immediately, keeping LCP early */
+  animation: rise-only 0.9s var(--ease-out-expo) both;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+/* ---------------------------------- */
+/* Pointer parallax (project cards)   */
+/* ---------------------------------- */
+
+/* JS only writes --mx/--my (pointer position, -0.5…0.5); all visual
+   work happens here on the compositor. */
+.parallax-card {
+  transform: perspective(900px) rotateX(calc(var(--my, 0) * -8deg))
+    rotateY(calc(var(--mx, 0) * 10deg)) translateZ(0);
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+.parallax-card > .parallax-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--m-active, 0);
+  background: radial-gradient(
+    420px circle at calc(50% + var(--mx, 0) * 100%) calc(50% + var(--my, 0) * 100%),
+    rgba(139, 147, 255, 0.14),
+    transparent 65%
+  );
+  transition: opacity 0.35s ease;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .parallax-card {
+    transform: none;
+  }
+  .parallax-card > .parallax-glare {
+    display: none;
+  }
+}
+
+/* ---------------------------------- */
+/* Scroll-triggered SVG diagrams      */
+/* ---------------------------------- */
+
+/* Descendants of a Reveal animate when the ancestor flips [data-inview].
+   Lines need pathLength="1" so the dash math is normalized. */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.2s ease-out var(--draw-delay, 0s);
+}
+
+.pop-node {
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.5s var(--ease-out-expo) var(--draw-delay, 0s),
+    opacity 0.4s ease var(--draw-delay, 0s);
+}
+
+.rise-item {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    transform 0.6s var(--ease-out-expo) var(--draw-delay, 0s),
+    opacity 0.5s ease var(--draw-delay, 0s);
+}
+
+[data-inview] .draw-line {
+  stroke-dashoffset: 0;
+}
+[data-inview] .pop-node {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-inview] .rise-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.spine-grow {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.4s var(--ease-out-expo);
+}
+[data-inview] .spine-grow {
+  transform: scaleY(1);
+}
+
+/* Tab/stage panel switches: content is re-keyed in React, this plays on mount */
+.panel-in {
+  animation: rise-fade 0.3s ease-out both;
 }

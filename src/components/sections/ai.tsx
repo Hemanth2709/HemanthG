@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 import { Reveal } from "@/components/effects/reveal";
@@ -8,9 +5,11 @@ import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { agentPipeline, aiCapabilities, aiIntro } from "@/data/ai";
 
+/**
+ * Server component — the pipeline entrance uses `.rise-item` CSS
+ * transitions triggered by the wrapping <Reveal>'s [data-inview].
+ */
 export function AISection() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section id="ai" className="relative scroll-mt-24 overflow-hidden py-28 md:py-40" aria-label="AI and automation">
       {/* Ambient tint distinguishing the AI section */}
@@ -33,25 +32,20 @@ export function AISection() {
             <div className="flex min-w-max items-center justify-center gap-2 md:gap-4">
               {agentPipeline.map((node, index) => (
                 <div key={node.id} className="flex items-center gap-2 md:gap-4">
-                  <motion.div
-                    initial={reduceMotion ? undefined : { opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex min-w-24 flex-col items-center gap-1 rounded-2xl border border-line bg-background px-4 py-3.5 transition-colors duration-300 hover:border-accent/50 md:min-w-32 md:px-6 md:py-5"
+                  <div
+                    className="rise-item flex min-w-24 flex-col items-center gap-1 rounded-2xl border border-line bg-background px-4 py-3.5 transition-colors duration-300 hover:border-accent/50 md:min-w-32 md:px-6 md:py-5"
+                    style={{ "--draw-delay": `${index * 0.15}s` } as React.CSSProperties}
                   >
                     <span className="text-sm font-semibold text-foreground md:text-base">{node.label}</span>
                     <span className="font-mono text-[0.6rem] text-subtle md:text-xs">{node.sublabel}</span>
-                  </motion.div>
+                  </div>
                   {index < agentPipeline.length - 1 && (
-                    <motion.span
-                      initial={reduceMotion ? undefined : { opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.15 + 0.3 }}
+                    <span
+                      className="rise-item"
+                      style={{ "--draw-delay": `${index * 0.15 + 0.3}s` } as React.CSSProperties}
                     >
                       <ChevronRight className="size-4 animate-pulse-line text-accent" aria-hidden />
-                    </motion.span>
+                    </span>
                   )}
                 </div>
               ))}
