@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
 
 import { Reveal } from "@/components/effects/reveal";
@@ -49,39 +48,33 @@ export function Process() {
             ))}
           </div>
 
-          {/* Active stage detail */}
+          {/* Active stage detail — re-keyed so the CSS entrance replays on change */}
           <div className="overflow-hidden rounded-3xl border border-line bg-surface">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12"
-              >
-                <div>
-                  <p className="eyebrow mb-2">
-                    Stage {String(activeIndex + 1).padStart(2, "0")} / {String(processSteps.length).padStart(2, "0")}
-                  </p>
-                  <h3 className="mb-3 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                    {active.label}
-                  </h3>
-                  <p className="max-w-lg text-pretty leading-relaxed text-muted">{active.description}</p>
-                </div>
-                <ul className="flex flex-col gap-2.5 md:min-w-56">
-                  {active.outputs.map((output) => (
-                    <li
-                      key={output}
-                      className="flex items-center gap-3 rounded-xl border border-line bg-background px-4 py-3 text-sm text-foreground"
-                    >
-                      <span className="size-1.5 rounded-full bg-accent" aria-hidden />
-                      {output}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </AnimatePresence>
+            <div
+              key={active.id}
+              className="panel-in grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12"
+            >
+              <div>
+                <p className="eyebrow mb-2">
+                  Stage {String(activeIndex + 1).padStart(2, "0")} / {String(processSteps.length).padStart(2, "0")}
+                </p>
+                <h3 className="mb-3 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                  {active.label}
+                </h3>
+                <p className="max-w-lg text-pretty leading-relaxed text-muted">{active.description}</p>
+              </div>
+              <ul className="flex flex-col gap-2.5 md:min-w-56">
+                {active.outputs.map((output) => (
+                  <li
+                    key={output}
+                    className="flex items-center gap-3 rounded-xl border border-line bg-background px-4 py-3 text-sm text-foreground"
+                  >
+                    <span className="size-1.5 rounded-full bg-accent" aria-hidden />
+                    {output}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Reveal>
       </div>

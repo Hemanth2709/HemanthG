@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, Github, Lightbulb } from "lucide-react";
 import * as React from "react";
 
+import { ParallaxCard } from "@/components/effects/parallax-card";
 import { Reveal } from "@/components/effects/reveal";
 import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/data/types";
@@ -41,8 +41,10 @@ export function CaseStudy({ project, reversed }: CaseStudyProps) {
       )}
       aria-label={`Case study: ${project.name}`}
     >
-      <Reveal className="lg:sticky lg:top-28">
-        <ProjectVisual name={project.name} category={project.category} hue={project.hue} />
+      <Reveal className="cq lg:sticky lg:top-28">
+        <ParallaxCard className="rounded-3xl">
+          <ProjectVisual name={project.name} category={project.category} hue={project.hue} />
+        </ParallaxCard>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {project.technologies.map((tech) => (
@@ -93,44 +95,37 @@ export function CaseStudy({ project, reversed }: CaseStudyProps) {
             {deepDiveTabs.map((item) => (
               <button
                 key={item.id}
+                id={`tab-${project.slug}-${item.id}`}
                 role="tab"
                 aria-selected={tab === item.id}
+                aria-controls={`panel-${project.slug}-${item.id}`}
                 onClick={() => setTab(item.id)}
                 className={cn(
-                  "relative flex-1 px-4 py-3 text-xs font-medium transition-colors md:text-sm",
-                  tab === item.id ? "text-foreground" : "text-subtle hover:text-muted",
+                  "relative flex-1 border-b px-4 py-3 text-xs font-medium transition-colors duration-300 md:text-sm",
+                  tab === item.id
+                    ? "-mb-px border-accent text-foreground"
+                    : "border-transparent text-subtle hover:text-muted",
                 )}
               >
                 {item.label}
-                {tab === item.id && (
-                  <motion.span
-                    layoutId={`tab-${project.slug}`}
-                    className="absolute inset-x-4 -bottom-px h-px bg-accent"
-                    transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                  />
-                )}
               </button>
             ))}
           </div>
-          <div className="p-5">
-            <AnimatePresence mode="wait">
-              <motion.ul
-                key={tab}
-                role="tabpanel"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="flex flex-col gap-3"
-              >
-                {tabContent[tab].map((line, index) => (
-                  <li key={index} className="flex gap-3 text-sm leading-relaxed text-muted">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" aria-hidden />
-                    {line}
-                  </li>
-                ))}
-              </motion.ul>
-            </AnimatePresence>
+          <div
+            key={tab}
+            id={`panel-${project.slug}-${tab}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${project.slug}-${tab}`}
+            className="panel-in p-5"
+          >
+            <ul className="flex flex-col gap-3">
+              {tabContent[tab].map((line, index) => (
+                <li key={index} className="flex gap-3 text-sm leading-relaxed text-muted">
+                  <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" aria-hidden />
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

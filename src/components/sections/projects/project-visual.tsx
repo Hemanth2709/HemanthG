@@ -1,7 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 interface ProjectVisualProps {
   name: string;
   category: string;
@@ -11,9 +7,12 @@ interface ProjectVisualProps {
 /**
  * Generative hero visual: each project gets an abstract system diagram
  * tinted with its own hue — no image assets, crisp at any size.
+ *
+ * Server component with zero JS: the node/edge entrance uses the
+ * `.draw-line` / `.pop-node` CSS transitions, triggered when the
+ * enclosing <Reveal> flips `data-inview`.
  */
 export function ProjectVisual({ name, category, hue }: ProjectVisualProps) {
-  const reduceMotion = useReducedMotion();
   const accent = `hsl(${hue} 85% 72%)`;
   const accentSoft = `hsla(${hue}, 85%, 65%, 0.14)`;
 
@@ -53,8 +52,10 @@ export function ProjectVisual({ name, category, hue }: ProjectVisualProps) {
           const b = nodes[to];
           if (!a || !b) return null;
           return (
-            <motion.line
+            <line
               key={index}
+              className="draw-line"
+              pathLength={1}
               x1={a.cx}
               y1={a.cy}
               x2={b.cx}
@@ -62,16 +63,14 @@ export function ProjectVisual({ name, category, hue }: ProjectVisualProps) {
               stroke={accent}
               strokeOpacity={0.35}
               strokeWidth={1.2}
-              initial={reduceMotion ? undefined : { pathLength: 0 }}
-              whileInView={reduceMotion ? undefined : { pathLength: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, delay: 0.2 + index * 0.12, ease: "easeOut" }}
+              style={{ "--draw-delay": `${0.2 + index * 0.12}s` } as React.CSSProperties}
             />
           );
         })}
         {nodes.map((node, index) => (
-          <motion.circle
+          <circle
             key={index}
+            className="pop-node"
             cx={node.cx}
             cy={node.cy}
             r={node.r}
@@ -79,10 +78,7 @@ export function ProjectVisual({ name, category, hue }: ProjectVisualProps) {
             stroke={accent}
             strokeOpacity={0.8}
             strokeWidth={1.4}
-            initial={reduceMotion ? undefined : { scale: 0, opacity: 0 }}
-            whileInView={reduceMotion ? undefined : { scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ "--draw-delay": `${0.15 + index * 0.1}s` } as React.CSSProperties}
           />
         ))}
       </svg>

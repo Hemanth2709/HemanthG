@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import * as React from "react";
 
@@ -14,10 +13,17 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 24));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Track which section is in view for the active indicator.
@@ -50,7 +56,7 @@ export function Navbar() {
         <a
           href="#"
           className="font-mono text-sm font-semibold tracking-[0.3em] text-foreground transition-colors hover:text-accent-bright"
-          aria-label={`${site.name} — back to top`}
+          aria-label={`${site.initials} — ${site.name}, back to top`}
         >
           {site.initials}
         </a>
@@ -60,19 +66,15 @@ export function Navbar() {
             <li key={item.href}>
               <a
                 href={item.href}
+                aria-current={active === item.href ? "true" : undefined}
                 className={cn(
                   "relative rounded-full px-4 py-2 text-sm transition-colors duration-300",
-                  active === item.href ? "text-foreground" : "text-muted hover:text-foreground",
+                  active === item.href
+                    ? "bg-white/[0.06] text-foreground"
+                    : "text-muted hover:bg-white/[0.03] hover:text-foreground",
                 )}
               >
-                {active === item.href && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute inset-0 rounded-full bg-white/[0.06]"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="relative">{item.label}</span>
+                {item.label}
               </a>
             </li>
           ))}
@@ -98,45 +100,44 @@ export function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="glass border-b border-line md:hidden"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <ul className="container-site flex flex-col gap-1 py-4">
-              {navigation.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "block rounded-lg px-4 py-3 text-sm transition-colors",
-                      active === item.href
-                        ? "bg-white/[0.06] text-foreground"
-                        : "text-muted hover:text-foreground",
-                    )}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-              <li>
+      {/* Mobile menu: CSS grid-rows transition — no animation library */}
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-out md:hidden",
+          open ? "glass grid-rows-[1fr] border-b border-line opacity-100" : "grid-rows-[0fr] opacity-0",
+        )}
+        inert={!open}
+      >
+        <div className="overflow-hidden">
+          <ul className="container-site flex flex-col gap-1 py-4">
+            {navigation.map((item) => (
+              <li key={item.href}>
                 <a
-                  href="#contact"
+                  href={item.href}
                   onClick={() => setOpen(false)}
-                  className="mt-2 block rounded-lg bg-foreground px-4 py-3 text-center text-sm font-medium text-background"
+                  className={cn(
+                    "block rounded-lg px-4 py-3 text-sm transition-colors",
+                    active === item.href
+                      ? "bg-white/[0.06] text-foreground"
+                      : "text-muted hover:text-foreground",
+                  )}
                 >
-                  Get in touch
+                  {item.label}
                 </a>
               </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+            <li>
+              <a
+                href="#contact"
+                onClick={() => setOpen(false)}
+                className="mt-2 block rounded-lg bg-foreground px-4 py-3 text-center text-sm font-medium text-background"
+              >
+                Get in touch
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </header>
   );
 }

@@ -1,15 +1,13 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 import { Reveal } from "@/components/effects/reveal";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { experience } from "@/data/experience";
 
+/**
+ * Server component — the timeline spine grows via the `.spine-grow`
+ * CSS transition when the wrapping <Reveal> enters the viewport.
+ */
 export function Experience() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section id="experience" className="scroll-mt-24 py-28 md:py-40" aria-label="Experience">
       <div className="container-site">
@@ -19,15 +17,11 @@ export function Experience() {
           description="A path through agencies, startups, and independent product work — each stop compounding into how I build today."
         />
 
-        <div className="relative mx-auto max-w-3xl">
+        <Reveal y={0} className="relative mx-auto max-w-3xl">
           {/* Animated spine */}
-          <motion.div
+          <div
             aria-hidden
-            className="absolute bottom-0 left-4 top-2 w-px origin-top bg-gradient-to-b from-accent/60 via-line-strong to-transparent md:left-1/2"
-            initial={reduceMotion ? undefined : { scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+            className="spine-grow absolute bottom-0 left-4 top-2 w-px bg-gradient-to-b from-accent/60 via-line-strong to-transparent md:left-1/2"
           />
 
           <ol className="flex flex-col gap-14">
@@ -77,7 +71,7 @@ export function Experience() {
               );
             })}
           </ol>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
