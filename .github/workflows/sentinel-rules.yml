@@ -1,0 +1,45 @@
+name: Sentinel Rules security scan
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SEMGREP_VERSION: "1.180.0"
+  # Sentinel Rules v0.1.0 (merge commit of Hemanth2709/SentinelRules#6).
+  SENTINEL_RULES_REF: b6e304d988c84962b6aa976e46de64a08292c3b1
+
+jobs:
+  scan:
+    name: Scan with Sentinel Rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v5
+
+      - name: Check out Sentinel Rules
+        uses: actions/checkout@v5
+        with:
+          repository: Hemanth2709/SentinelRules
+          ref: ${{ env.SENTINEL_RULES_REF }}
+          path: .sentinel-rules
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Semgrep ${{ env.SEMGREP_VERSION }}
+        run: python -m pip install "semgrep==${SEMGREP_VERSION}"
+
+      - name: Scan
+        # --error fails the job when any rule reports a finding.
+        run: |
+          semgrep scan --metrics=off \
+            --config .sentinel-rules/rules \
+            --exclude .sentinel-rules \
+            --error .
