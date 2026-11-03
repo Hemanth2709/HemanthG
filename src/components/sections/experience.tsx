@@ -1,77 +1,46 @@
 import { Reveal } from "@/components/effects/reveal";
-import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { experience } from "@/data/experience";
 
-/**
- * Server component — the timeline spine grows via the `.spine-grow`
- * CSS transition when the wrapping <Reveal> enters the viewport.
- */
+/** Renders nothing until src/data/experience.ts has real entries. */
 export function Experience() {
+  if (experience.length === 0) return null;
+
   return (
-    <section id="experience" className="scroll-mt-24 py-28 md:py-40" aria-label="Experience">
+    <section id="experience" className="scroll-mt-20 border-t border-line py-24 md:py-32" aria-label="Experience">
       <div className="container-site">
-        <SectionHeading
-          eyebrow="Experience"
-          title="Where the lessons came from."
-          description="A path through agencies, startups, and independent product work — each stop compounding into how I build today."
-        />
+        <SectionHeading eyebrow="Experience" title="Where I've worked" />
 
-        <Reveal y={0} className="relative mx-auto max-w-3xl">
-          {/* Animated spine */}
-          <div
-            aria-hidden
-            className="spine-grow absolute bottom-0 left-4 top-2 w-px bg-gradient-to-b from-accent/60 via-line-strong to-transparent md:left-1/2"
-          />
-
-          <ol className="flex flex-col gap-14">
-            {experience.map((entry, index) => {
-              const alignRight = index % 2 === 1;
-              return (
-                <li key={`${entry.company}-${entry.period}`} className="relative">
-                  {/* Node */}
-                  <span
-                    aria-hidden
-                    className="absolute left-4 top-2 z-10 size-3 -translate-x-1/2 rounded-full border-2 border-accent bg-background shadow-[0_0_12px_rgba(139,147,255,0.5)] md:left-1/2"
-                  />
-                  <Reveal
-                    delay={0.1}
-                    className={`ml-10 md:ml-0 md:w-[calc(50%-2.5rem)] ${alignRight ? "md:ml-auto" : ""}`}
-                  >
-                    <div className="group rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:border-line-strong hover:bg-raised md:p-7">
-                      <p className="font-mono text-xs text-accent">{entry.period}</p>
-                      <h3 className="mt-2 text-lg font-semibold tracking-tight text-foreground">
-                        {entry.role}
-                      </h3>
-                      <p className="text-sm text-muted">
-                        {entry.company} · {entry.location}
-                      </p>
-                      <p className="mt-4 text-sm leading-relaxed text-muted">{entry.summary}</p>
-                      <ul className="mt-4 flex flex-col gap-2">
-                        {entry.achievements.map((achievement, achievementIndex) => (
-                          <li
-                            key={achievementIndex}
-                            className="flex gap-3 text-sm leading-relaxed text-foreground/90"
-                          >
-                            <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" aria-hidden />
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-5 flex flex-wrap gap-1.5">
-                        {entry.technologies.map((tech) => (
-                          <Badge key={tech} className="px-2.5 py-0.5 text-[0.65rem]">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ol>
-        </Reveal>
+        <ol className="divide-y divide-line border-y border-line">
+          {experience.map((entry) => (
+            <li key={`${entry.company}-${entry.period}`} className="grid gap-4 py-8 md:grid-cols-[14rem_1fr] md:gap-10">
+              <Reveal>
+                <p className="font-mono text-xs text-subtle">{entry.period}</p>
+                <p className="mt-2 font-medium text-foreground">{entry.company}</p>
+                <p className="text-sm text-muted">{entry.location}</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h3 className="font-medium text-foreground">{entry.role}</h3>
+                <p className="mt-2 text-pretty text-sm leading-relaxed text-muted">{entry.summary}</p>
+                {entry.achievements.length > 0 ? (
+                  <ul className="mt-4 flex flex-col gap-2">
+                    {entry.achievements.map((item) => (
+                      <li key={item} className="grid grid-cols-[1rem_1fr] gap-2 text-sm leading-relaxed text-muted">
+                        <span aria-hidden className="text-subtle">
+                          —
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {entry.technologies.length > 0 ? (
+                  <p className="mt-4 font-mono text-xs text-subtle">{entry.technologies.join(" · ")}</p>
+                ) : null}
+              </Reveal>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

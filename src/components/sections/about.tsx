@@ -1,36 +1,36 @@
 import { Reveal } from "@/components/effects/reveal";
-import { Icon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { aboutNarrative, principles } from "@/data/about";
 
 export function About() {
   return (
-    <section id="about" className="scroll-mt-24 py-28 md:py-40" aria-label="About">
+    <section id="about" className="scroll-mt-20 border-t border-line py-24 md:py-32" aria-label="About">
       <div className="container-site">
         <SectionHeading eyebrow="About" title={aboutNarrative.headline} />
 
-        <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
-          <div className="flex flex-col gap-6">
+        <div className="grid gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
+          <div className="flex max-w-prose flex-col gap-5">
             {aboutNarrative.paragraphs.map((paragraph, index) => (
-              <Reveal key={index} delay={index * 0.08}>
+              <Reveal key={index} delay={index * 0.06}>
                 <p className="text-pretty text-base leading-relaxed text-muted md:text-lg">{paragraph}</p>
               </Reveal>
             ))}
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {principles.map((principle, index) => (
-              <Reveal key={principle.title} delay={index * 0.08}>
-                <div className="group h-full rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:border-line-strong hover:bg-raised">
-                  <div className="mb-4 flex size-10 items-center justify-center rounded-xl bg-accent-dim text-accent transition-transform duration-300 group-hover:scale-110">
-                    <Icon name={principle.icon} className="size-5" />
+          <Reveal delay={0.1}>
+            <h3 className="mb-5 font-mono text-xs uppercase tracking-[0.16em] text-subtle">How I work</h3>
+            <ol className="flex flex-col divide-y divide-line border-y border-line">
+              {principles.map((principle, index) => (
+                <li key={principle.title} className="grid grid-cols-[2rem_1fr] gap-x-3 py-5">
+                  <span className="font-mono text-sm text-accent">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="font-medium text-foreground">{principle.title}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{principle.description}</p>
                   </div>
-                  <h3 className="mb-2 text-sm font-semibold text-foreground">{principle.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted">{principle.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </div>
     </section>

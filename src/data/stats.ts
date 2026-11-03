@@ -1,34 +1,35 @@
 import type { Stat } from "./types";
 
+/** Sentinel-Security v0.1.1. Each figure is in the repository. */
 export const stats: Stat[] = [
   {
-    value: 20,
-    suffix: "+",
-    label: "Projects Built",
-    description: "From weekend prototypes to production platforms",
-  },
-  {
-    value: 5,
-    suffix: "+",
-    label: "Years of Experience",
-    description: "Across startups, agencies, and independent work",
-  },
-  {
-    value: 15,
-    suffix: "+",
-    label: "AI Integrations",
-    description: "LLM features, agents, and automation shipped",
-  },
-  {
-    value: 8,
+    value: 10,
     suffix: "",
-    label: "Products Shipped",
-    description: "Taken from first commit to real users",
+    label: "Security rules",
+    description: "Each mapped to a CWE and an OWASP category",
   },
   {
-    value: 30,
-    suffix: "+",
-    label: "Technologies Used",
-    description: "Chosen deliberately, retired without sentiment",
+    value: 94,
+    suffix: "",
+    label: "Test cases",
+    description: "47 that must be flagged, 47 that must not",
+  },
+  {
+    value: 26,
+    suffix: "",
+    label: "Planted vulnerabilities",
+    description: "In the benchmark app, alongside 20 safe look-alikes",
+  },
+  {
+    value: 75,
+    suffix: "%",
+    label: "Precision",
+    description: "Findings that were real bugs",
+  },
+  {
+    value: 65,
+    suffix: "%",
+    label: "Recall",
+    description: "Planted bugs found, in the categories the rules cover",
   },
 ];
