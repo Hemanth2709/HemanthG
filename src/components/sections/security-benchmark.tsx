@@ -5,17 +5,16 @@ export function Benchmark() {
   return (
     <Reveal>
       <div className="mb-6 max-w-2xl">
-        <h3 className="text-xl font-semibold tracking-tight text-foreground">Benchmark</h3>
-        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted md:text-base">
-          A deliberately vulnerable NestJS and Next.js app with 26 planted vulnerabilities and 20 safe look-alikes.
-          Each case has a predicted outcome, written down before the scan.
+        <h4 className="text-lg font-semibold tracking-tight text-foreground">Benchmark by release</h4>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted">
+          The v0.1.1 gain came from a miss the benchmark found: SQL appended inside an if.
         </p>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-line">
+      <div className="overflow-x-auto rounded-lg border border-line-strong bg-background">
         <table className="w-full text-left text-xs sm:text-sm">
           <caption className="sr-only">Benchmark results by release</caption>
-          <thead className="bg-surface font-mono text-xs text-subtle">
+          <thead className="bg-raised font-mono text-xs text-subtle">
             <tr>
               <th scope="col" className="px-2 py-3 sm:px-4 font-normal">Release</th>
               <th scope="col" className="px-2 py-3 sm:px-4 text-right font-normal">Findings</th>

@@ -1,25 +1,35 @@
-import type { AboutPrinciple } from "./types";
+import type { Achievement, TimelineItem } from "./types";
 
-export const aboutNarrative = {
-  headline: "Most security bugs are ordinary code.",
+export const about = {
+  headline: ["Engineering across the stack.", "Thinking beyond the code."],
   paragraphs: [
-    "I build products in TypeScript: Next.js front ends and NestJS APIs, deployed on AWS. That's the code I know best, and it's where I'm focusing as I move into application security.",
-    "The bugs that matter in web apps are rarely exotic. A route without a guard, a cookie without Secure, a query assembled with string concatenation. I want those caught automatically, before review, with an explanation of the fix.",
-    "I'm making that move in the open. Every rule, test and benchmark result on this page is in a public repository, including the cases the rules still miss.",
+    "I'm a full stack developer with 3.5+ years of experience shipping web applications, cloud infrastructure and internal platforms. Most of my work is in TypeScript, React, Next.js, Node.js and NestJS, running on AWS and DigitalOcean.",
+    "The part I enjoy most is the layer underneath the app: deployment pipelines, Linux servers, NGINX load balancing, DNS and SSL, and server migrations that end with systems that simply run.",
+    "Security grew out of that work. I've built an OAuth 2.0 single sign-on identity provider with role-based access control and a contract platform with end-to-end encryption. Sentinel-Security, my Semgrep rule pack, is where I'm turning that into a focus.",
+    "Before my current role I co-founded a startup with friends during my B.Tech, which taught me to own problems end to end.",
   ],
 };
 
-export const principles: AboutPrinciple[] = [
-  {
-    title: "Failing test first",
-    description: "A rule change starts with a fixture that fails. If I can't show the miss, I don't change the rule.",
-  },
-  {
-    title: "Measure against ground truth",
-    description: "Precision and recall come from labelled cases, predicted before the scan, not from impressions.",
-  },
-  {
-    title: "Write down the blind spots",
-    description: "Every rule documents what it can't see. A scanner that hides its gaps is worse than none.",
-  },
+export const timeline: TimelineItem[] = [
+  { period: "2019 – 2023", title: "B.Tech, REVA University", detail: "Electronics and Computer Engineering" },
+  { period: "2021 – 2023", title: "Swift Ride", detail: "Co-founded; Android developer" },
+  { period: "2024 – 2025", title: "Ginger Media Group", detail: "Software Engineer" },
+  { period: "2025 – now", title: "Ralecon IT Consulting", detail: "Full Stack Developer" },
+  { period: "2026", title: "Sentinel-Security", detail: "Open-source Semgrep rules, v0.1.1" },
 ];
+
+export const achievements: Achievement[] = [
+  { title: "CISCO Thinqbator", detail: "Selected for the programme for startups and innovators" },
+  { title: "₹5 Lakh seed grant", detail: "Awarded by RISE X Runway to develop and scale tech projects" },
+  { title: "RISE X Runway", detail: "Innovative Start-up Certificate" },
+  { title: "Tim Draper cohort", detail: "Worked with 50+ entrepreneurial leaders; milestones delivered ahead of schedule" },
+];
+
+export const education = {
+  degree: "B.Tech, Electronics and Computer Engineering",
+  school: "REVA University, Bengaluru",
+  period: "2019 – 2023",
+  grade: "CGPA 8.56 / 10",
+};
+
+export const languages = "English (fluent) · Kannada (native) · Tamil, Hindi, Telugu (conversational)";

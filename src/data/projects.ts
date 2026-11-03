@@ -1,49 +1,166 @@
 import type { BenchmarkRow, CoverageRow, PlannedProject, Project } from "./types";
 
 /**
- * Only shipped work goes here. Every number below can be checked in the
- * linked repository (tests, CHANGELOG, docs/benchmark-results.md).
+ * Featured work. Sentinel-Security figures can be checked in its public
+ * repository; professional projects are described only as far as the
+ * owner's CV describes them. Architecture diagrams are simplified and
+ * show only the components named there.
  */
+export const featured: Project = {
+  slug: "sentinel-security",
+  name: "Sentinel-Security",
+  category: "Application Security / SAST",
+  status: "Released",
+  context: "Open source · v0.1.1",
+  summary:
+    "Custom Semgrep rules that find security mistakes in NestJS and Next.js code, with tests for every rule and a benchmark that measures how often they're right.",
+  problem:
+    "General-purpose scanners don't know framework conventions. A ValidationPipe without whitelist, a secret in a NEXT_PUBLIC_ variable or CORS that trusts any origin all look like ordinary code, so they reach review, or production, unflagged.",
+  contribution:
+    "Designed and wrote all ten rules, the test fixtures, the deliberately vulnerable benchmark app, the scoring and the CI pipeline.",
+  highlights: [
+    "Each rule is mapped to a CWE and an OWASP category, with a vulnerable example, a fix and the reasoning",
+    "47 must-flag and 47 must-ignore test cases, passing on Linux and Windows",
+    "75% precision and 65% recall on a benchmark app with 26 planted vulnerabilities",
+    "The benchmark found a real miss, which became the v0.1.1 fix",
+  ],
+  technologies: ["Semgrep", "TypeScript", "NestJS", "Next.js", "Python", "GitHub Actions"],
+  flow: [
+    { label: "Weakness", detail: "CWE · OWASP" },
+    { label: "Fixtures", detail: "must flag / must not" },
+    { label: "Rule", detail: "Semgrep YAML", emphasis: true },
+    { label: "Benchmark", detail: "ground truth" },
+    { label: "CI", detail: "every push" },
+  ],
+  links: [
+    { label: "Repository", href: "https://github.com/Hemanth2709/SentinelRules" },
+    { label: "v0.1.1 release", href: "https://github.com/Hemanth2709/SentinelRules/releases/tag/v0.1.1" },
+  ],
+};
+
 export const projects: Project[] = [
   {
-    slug: "sentinel-security",
-    name: "Sentinel-Security",
-    category: "Semgrep rule pack · NestJS & Next.js",
-    timeframe: "2026",
-    status: "v0.1.1 released",
+    slug: "identity-provider",
+    name: "Identity Provider",
+    category: "Identity & Access / SSO",
+    status: "Professional work",
+    context: "Ralecon IT Consulting Services",
     summary:
-      "Custom Semgrep rules that find common security mistakes in NestJS and Next.js code, with tests for every rule and a benchmark that measures how often they are right.",
-    problem:
-      "General-purpose scanners don't know framework conventions. A ValidationPipe without whitelist, a secret in a NEXT_PUBLIC_ variable or CORS that reflects any origin all look like ordinary code, so they reach review, or production, unflagged.",
-    solution:
-      "Ten Semgrep rules, one per pattern, each mapped to a CWE and an OWASP category, with a vulnerable example, a fixed version and the reasoning behind the fix. They run in CI on every push, so a regression in a rule can't merge.",
-    architecture: [
-      "One YAML rule per weakness, scoped with pattern-inside and metavariable checks so generic method names like .query() don't match",
-      "Annotated fixtures for every rule: lines that must be flagged and lines that must not",
-      "A deliberately vulnerable NestJS + Next.js app with 26 planted bugs and 20 safe look-alikes, scored by a script against a ground truth",
-      "GitHub Actions running validation, all fixtures and the examples, pinned to Semgrep 1.180.0",
+      "A centralised identity provider that gives users one login across multiple internal products, with managed roles, a client application registry and secure token issuance.",
+    problem: "Several internal products each needed sign-in. The goal was less authentication complexity and more secure onboarding.",
+    contribution: "Architected the platform, implementing OAuth 2.0 with role-based access control.",
+    highlights: [
+      "One login across multiple internal products",
+      "Role-based access control and a client application registry",
+      "Reduced authentication complexity across the product suite",
     ],
-    decisions: [
-      "Prefer precision on review-style rules: a noisy rule gets turned off, a documented gap can be covered another way",
-      "Write the failing test before changing a rule, so every fix comes with proof it was needed",
-      "Record a prediction for each benchmark case before scanning, so the results can't be tuned after the fact",
+    technologies: ["Next.js", "PostgreSQL", "OAuth 2.0", "RBAC"],
+    flow: [
+      { label: "Products", detail: "registered clients" },
+      { label: "Identity provider", detail: "OAuth 2.0 · RBAC", emphasis: true },
+      { label: "Tokens", detail: "secure issuance" },
+      { label: "PostgreSQL", detail: "users · roles · clients" },
     ],
-    results: [
-      "47 must-flag and 47 must-ignore test cases, all passing on Linux and Windows",
-      "75% precision and 65% recall on the ground-truth benchmark (v0.1.1)",
-      "The benchmark found a real miss, SQL appended inside an if, which became the v0.1.1 fix",
-      "Runs in this site's CI on every push",
+    links: [],
+  },
+  {
+    slug: "contract-management",
+    name: "Contract Management System",
+    category: "Secure Platforms / Serverless",
+    status: "Professional work",
+    context: "Ralecon IT Consulting Services",
+    summary:
+      "A secure contract lifecycle platform with end-to-end encryption, role-based dashboards for creation and approval workflows, and audit trails.",
+    problem: "Contracts go through creation and approval by different roles, and their contents have to stay protected throughout.",
+    contribution: "Led development of the platform, frontend to serverless backend.",
+    highlights: [
+      "End-to-end encryption of contract data",
+      "Role-based dashboards for creation and approval workflows",
+      "Audit trails, plus Google Analytics for usage insight",
     ],
-    limitations: [
-      "Single-file analysis: global guards and options defined in other files are invisible",
-      "The authorization rules are heuristics: all 5 benchmark false positives are public routes like login",
-      "No findings is not proof of safety: SQL built in a helper function is still missed",
+    technologies: ["React", "Node.js", "AWS Lambda", "API Gateway", "MySQL"],
+    flow: [
+      { label: "React app", detail: "role dashboards" },
+      { label: "API Gateway" },
+      { label: "Lambda", detail: "Node.js" },
+      { label: "Encryption", detail: "end to end", emphasis: true },
+      { label: "MySQL", detail: "contracts · audit trail" },
     ],
-    technologies: ["Semgrep", "TypeScript", "NestJS", "Next.js", "Python", "GitHub Actions"],
-    links: [
-      { label: "Repository", href: "https://github.com/Hemanth2709/SentinelRules" },
-      { label: "Release notes", href: "https://github.com/Hemanth2709/SentinelRules/releases/tag/v0.1.1" },
+    links: [],
+  },
+  {
+    slug: "ginger-services",
+    name: "Services Portal",
+    category: "Microservices / Serverless",
+    status: "Live",
+    context: "Ginger Media Group",
+    summary:
+      "A microservices-based service management platform for internal and external users, on a serverless backend.",
+    contribution: "Built as a Software Engineer at Ginger Media Group.",
+    highlights: [
+      "Serverless architecture on AWS Lambda and API Gateway significantly reduced infrastructure cost",
+      "Next.js server-side rendering cut TTFB by 30% and improved SEO",
     ],
+    technologies: ["Next.js", "Node.js", "AWS Lambda", "API Gateway", "MySQL"],
+    flow: [
+      { label: "Next.js", detail: "server-rendered" },
+      { label: "API Gateway" },
+      { label: "Lambda services", detail: "Node.js", emphasis: true },
+      { label: "MySQL" },
+    ],
+    links: [{ label: "services.gingermediagroup.com", href: "https://services.gingermediagroup.com" }],
+  },
+  {
+    slug: "gogig",
+    name: "gOGig",
+    category: "Frontend Engineering",
+    status: "Live",
+    context: "gogig.in",
+    summary:
+      "The frontend of a freelance gig marketplace, built component-first with reusable, responsive UI connected to REST APIs for real-time data.",
+    contribution: "Built the frontend as a library of reusable, responsive components.",
+    highlights: ["Component-first architecture", "Responsive UI on REST APIs with real-time data updates"],
+    technologies: ["React", "TypeScript", "MUI", "REST APIs"],
+    flow: [
+      { label: "Components", detail: "MUI · TypeScript", emphasis: true },
+      { label: "React app" },
+      { label: "REST APIs", detail: "real-time data" },
+    ],
+    links: [{ label: "gogig.in", href: "https://gogig.in" }],
+  },
+];
+
+/** Blueprints only. Never shown as built. */
+export const planned: PlannedProject[] = [
+  {
+    name: "Nexus",
+    category: "Multi-tenant SaaS",
+    summary: "Tenant isolation, RBAC and authentication, with tests that try to read another tenant's data.",
+    technologies: ["NestJS", "PostgreSQL"],
+  },
+  {
+    name: "Gatekeeper",
+    category: "API security",
+    summary: "An API gateway with hashed API keys and Redis rate limiting that holds under concurrent load.",
+    technologies: ["Node.js", "Redis"],
+  },
+  {
+    name: "CloudForge",
+    category: "Infrastructure as code",
+    summary: "AWS infrastructure in Terraform with Docker and CI/CD, deployable from a clean account.",
+    technologies: ["Terraform", "AWS", "Docker"],
+  },
+  {
+    name: "TraceFlow",
+    category: "Observability",
+    summary: "OpenTelemetry traces with Prometheus and Grafana, used to find a simulated failure.",
+    technologies: ["OpenTelemetry", "Prometheus", "Grafana"],
+  },
+  {
+    name: "Pulse",
+    category: "Performance",
+    summary: "Scheduled Lighthouse and Core Web Vitals audits that catch a regression between runs.",
+    technologies: ["Lighthouse", "Core Web Vitals"],
   },
 ];
 
@@ -65,33 +182,4 @@ export const coverage: CoverageRow[] = [
 export const benchmark: BenchmarkRow[] = [
   { release: "v0.1.0", findings: 19, truePositives: 14, falsePositives: 5, precision: "74%", recall: "61%" },
   { release: "v0.1.1", findings: 20, truePositives: 15, falsePositives: 5, precision: "75%", recall: "65%" },
-];
-
-/** Planned, not started. Shown as such. */
-export const planned: PlannedProject[] = [
-  {
-    name: "Nexus",
-    focus: "Multi-tenant SaaS",
-    summary: "Tenant isolation enforced at the data layer, with tests that try to read another tenant's data.",
-  },
-  {
-    name: "Gatekeeper",
-    focus: "API gateway",
-    summary: "API-key auth with hashed keys and Redis rate limiting that holds under concurrent load.",
-  },
-  {
-    name: "CloudForge",
-    focus: "Infrastructure as code",
-    summary: "Terraform on AWS, deployable from a clean account, with a demonstrated rollback.",
-  },
-  {
-    name: "TraceFlow",
-    focus: "Observability",
-    summary: "OpenTelemetry traces across services, used to find a simulated failure.",
-  },
-  {
-    name: "Pulse",
-    focus: "Web performance",
-    summary: "Scheduled Lighthouse audits that catch a real regression between two runs.",
-  },
 ];
