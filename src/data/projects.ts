@@ -40,6 +40,29 @@ export const featured: Project = {
 
 export const projects: Project[] = [
   {
+    slug: "seo-audit",
+    name: "AI SEO Agentic Audit Tool",
+    category: "Full-Stack / Distributed Systems / AI",
+    status: "Private",
+    context: "Source not public",
+    summary:
+      "A distributed SEO auditing platform: it crawls a site, runs technical and semantic analysis in background workers, and generates a report.",
+    contribution: "Designed and built the platform. The source code and implementation details are private.",
+    highlights: [
+      "Crawling and analysis run in background workers",
+      "Technical SEO analysis alongside semantic analysis of page content",
+      "Findings compiled into a generated report",
+    ],
+    technologies: [],
+    flow: [
+      { label: "Crawler", detail: "site pages" },
+      { label: "Background workers", detail: "distributed jobs", emphasis: true },
+      { label: "Analysis", detail: "technical · semantic" },
+      { label: "Report", detail: "generated" },
+    ],
+    links: [],
+  },
+  {
     slug: "identity-provider",
     name: "Identity Provider",
     category: "Identity & Access / SSO",

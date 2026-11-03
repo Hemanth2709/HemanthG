@@ -71,7 +71,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
         </ul>
 
         <Flow nodes={project.flow} />
-        <TagList items={project.technologies} />
+        {project.technologies.length > 0 ? <TagList items={project.technologies} /> : null}
       </Reveal>
     </article>
   );
