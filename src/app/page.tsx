@@ -1,60 +1,45 @@
 import dynamic from "next/dynamic";
 
-import { CursorGlow } from "@/components/effects/cursor-glow";
-import { LoadingScreen } from "@/components/effects/loading-screen";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/hero";
+import { Stats } from "@/components/sections/stats";
 
 /**
- * Everything below the fold is code-split: sections still server-render
- * (SEO keeps full HTML) but their client JS loads in separate chunks
- * after the shell is interactive, keeping the critical bundle minimal.
- * The `cv-auto` wrappers skip layout/paint work for off-screen sections.
+ * Below-the-fold sections are code-split: they still server-render (full
+ * HTML for SEO) but their client JS loads in separate chunks. The
+ * `cv-auto` wrappers skip layout and paint for off-screen sections.
+ *
+ * Experience renders nothing until src/data/experience.ts has entries.
  */
 const About = dynamic(() => import("@/components/sections/about").then((m) => m.About));
 const Projects = dynamic(() => import("@/components/sections/projects").then((m) => m.Projects));
 const Process = dynamic(() => import("@/components/sections/process").then((m) => m.Process));
-const AISection = dynamic(() => import("@/components/sections/ai").then((m) => m.AISection));
-const Experience = dynamic(() => import("@/components/sections/experience").then((m) => m.Experience));
-const Toolkit = dynamic(() => import("@/components/sections/toolkit").then((m) => m.Toolkit));
-const Stats = dynamic(() => import("@/components/sections/stats").then((m) => m.Stats));
-const Testimonials = dynamic(() =>
-  import("@/components/sections/testimonials").then((m) => m.Testimonials),
+const Experience = dynamic(() =>
+  import("@/components/sections/experience").then((m) => m.Experience),
 );
+const Toolkit = dynamic(() => import("@/components/sections/toolkit").then((m) => m.Toolkit));
 const Contact = dynamic(() => import("@/components/sections/contact").then((m) => m.Contact));
 
 export default function HomePage() {
   return (
     <>
-      <LoadingScreen />
-      <CursorGlow />
       <Navbar />
       <main>
         <Hero />
+        <Stats />
         <div className="cv-auto">
           <About />
         </div>
         <div className="cv-auto">
           <Projects />
         </div>
-        {/* No cv-auto here: the scroll-driven sticky track must keep its
-            real height so scroll progress maps correctly to stages. */}
-        <Process />
         <div className="cv-auto">
-          <AISection />
+          <Process />
         </div>
-        <div className="cv-auto">
-          <Experience />
-        </div>
+        <Experience />
         <div className="cv-auto">
           <Toolkit />
-        </div>
-        <div className="cv-auto">
-          <Stats />
-        </div>
-        <div className="cv-auto">
-          <Testimonials />
         </div>
         <div className="cv-auto">
           <Contact />

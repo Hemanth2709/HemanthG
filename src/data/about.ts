@@ -1,37 +1,25 @@
 import type { AboutPrinciple } from "./types";
 
 export const aboutNarrative = {
-  headline: "Software is a product decision long before it's a technical one.",
+  headline: "Most security bugs are ordinary code.",
   paragraphs: [
-    "I build at the intersection of product thinking and systems engineering. Before writing a line of code, I want to understand the user, the constraint, and the metric that matters — because elegant architecture in service of the wrong problem is still the wrong product.",
-    "My work spans the full lifecycle: shaping ambiguous ideas into specs, designing architectures that scale past the demo, and shipping software that survives contact with real users. I gravitate toward AI-first products — systems where LLMs, agents, and automation aren't bolted on, but designed in from the first diagram.",
-    "I optimize for leverage: small, sharp teams shipping fast with clean abstractions, strong typing, and boring, reliable infrastructure underneath ambitious interfaces.",
+    "I build products in TypeScript: Next.js front ends and NestJS APIs, deployed on AWS. That's the code I know best, and it's where I'm focusing as I move into application security.",
+    "The bugs that matter in web apps are rarely exotic. A route without a guard, a cookie without Secure, a query assembled with string concatenation. I want those caught automatically, before review, with an explanation of the fix.",
+    "I'm making that move in the open. Every rule, test and benchmark result on this page is in a public repository, including the cases the rules still miss.",
   ],
 };
 
 export const principles: AboutPrinciple[] = [
   {
-    icon: "compass",
-    title: "Start from the problem",
-    description:
-      "Every build begins with the user's job-to-be-done and a success metric. Technology choices follow — never the other way around.",
+    title: "Failing test first",
+    description: "A rule change starts with a fixture that fails. If I can't show the miss, I don't change the rule.",
   },
   {
-    icon: "layers",
-    title: "Architect for change",
-    description:
-      "Products evolve. I design modular systems with clear seams, so tomorrow's pivot is a refactor — not a rewrite.",
+    title: "Measure against ground truth",
+    description: "Precision and recall come from labelled cases, predicted before the scan, not from impressions.",
   },
   {
-    icon: "zap",
-    title: "Ship to learn",
-    description:
-      "Working software beats perfect plans. I ship thin vertical slices early, instrument everything, and let real usage steer the roadmap.",
-  },
-  {
-    icon: "rocket",
-    title: "Own the outcome",
-    description:
-      "From first wireframe to production dashboards — I take ideas the whole distance and stay accountable for what happens after launch.",
+    title: "Write down the blind spots",
+    description: "Every rule documents what it can't see. A scanner that hides its gaps is worse than none.",
   },
 ];

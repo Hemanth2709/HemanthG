@@ -14,14 +14,13 @@ export interface SiteConfig {
   url: string;
   email: string;
   location: string;
-  resumeUrl: string;
   keywords: string[];
 }
 
 export interface SocialLink {
   label: string;
   href: string;
-  icon: "github" | "linkedin" | "mail" | "file";
+  icon: "github" | "linkedin" | "mail";
 }
 
 export interface NavItem {
@@ -30,51 +29,67 @@ export interface NavItem {
 }
 
 export interface AboutPrinciple {
-  icon: "compass" | "layers" | "zap" | "rocket";
   title: string;
   description: string;
+}
+
+export interface ProjectLink {
+  label: string;
+  href: string;
 }
 
 export interface Project {
   slug: string;
   name: string;
-  timeframe: string;
+  /** Short label shown above the name, e.g. "Semgrep rule pack". */
   category: string;
-  /** Accent hue (deg) used to generate the project's visual identity. */
-  hue: number;
+  timeframe: string;
+  /** Current state, stated plainly (e.g. "v0.1.1 released"). */
+  status: string;
+  summary: string;
   problem: string;
   solution: string;
+  /** How it works, one line per part. */
   architecture: string[];
-  challenges: string[];
   decisions: string[];
   results: string[];
-  lessons: string;
+  /** What it cannot do. Shown with the same weight as results. */
+  limitations: string[];
   technologies: string[];
-  links: {
-    demo?: string;
-    github?: string;
-  };
+  links: ProjectLink[];
+}
+
+/** One rule in the coverage table. */
+export interface CoverageRow {
+  detects: string;
+  rule: string;
+  cwe: string;
+  owasp: string;
+  severity: "ERROR" | "WARNING";
+}
+
+/** Benchmark result for one release of the rule pack. */
+export interface BenchmarkRow {
+  release: string;
+  findings: number;
+  truePositives: number;
+  falsePositives: number;
+  precision: string;
+  recall: string;
+}
+
+/** A project that has not been built yet. */
+export interface PlannedProject {
+  name: string;
+  focus: string;
+  summary: string;
 }
 
 export interface ProcessStep {
   id: string;
   label: string;
-  icon: "search" | "pen-tool" | "network" | "code" | "cloud" | "gauge" | "refresh";
   description: string;
   outputs: string[];
-}
-
-export interface AICapability {
-  icon: "bot" | "workflow" | "sparkles" | "braces" | "server" | "shield";
-  title: string;
-  description: string;
-  signals: string[];
-}
-
-export interface AgentPipelineNode {
-  id: string;
-  label: string;
-  sublabel: string;
 }
 
 export interface ExperienceEntry {
@@ -88,19 +103,7 @@ export interface ExperienceEntry {
 }
 
 export interface ToolkitCategory {
-  icon:
-    | "code"
-    | "layout"
-    | "server"
-    | "cloud"
-    | "brain"
-    | "database"
-    | "boxes"
-    | "git-branch"
-    | "workflow"
-    | "plug";
   title: string;
-  blurb: string;
   items: string[];
 }
 
@@ -109,10 +112,4 @@ export interface Stat {
   suffix: string;
   label: string;
   description: string;
-}
-
-export interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
 }

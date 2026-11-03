@@ -1,60 +1,47 @@
 import type { ProcessStep } from "./types";
 
+/** The loop every rule in Sentinel-Security goes through. */
 export const processSteps: ProcessStep[] = [
   {
-    id: "research",
-    label: "Research",
-    icon: "search",
+    id: "model",
+    label: "Model",
     description:
-      "Understand the user, the constraint, and the metric that defines success. Talk to people, read the data, map what exists.",
-    outputs: ["Problem statement", "Success metrics", "Constraints map"],
+      "Pin down the weakness: what the vulnerable code looks like, what makes it exploitable, and the CWE and OWASP category it belongs to.",
+    outputs: ["Vulnerable example", "Fixed example", "CWE / OWASP mapping"],
   },
   {
-    id: "design",
-    label: "Design",
-    icon: "pen-tool",
+    id: "test",
+    label: "Test",
     description:
-      "Shape the experience before the implementation. Flows, states, and edge cases — sketched, challenged, and simplified.",
-    outputs: ["User flows", "Interface states", "Scope cutlines"],
+      "Write the fixtures before the rule: lines that must be flagged, and safe look-alikes that must not be.",
+    outputs: ["ruleid fixtures", "ok fixtures", "Failing run"],
   },
   {
-    id: "architecture",
-    label: "Architecture",
-    icon: "network",
+    id: "rule",
+    label: "Rule",
     description:
-      "Choose boring technology with sharp seams. Design the data model, the failure modes, and the path to scale.",
-    outputs: ["System diagram", "Data model", "Failure playbook"],
-  },
-  {
-    id: "build",
-    label: "Build",
-    icon: "code",
-    description:
-      "Ship thin vertical slices with strict types and tests where they pay rent. Working software over perfect plans.",
-    outputs: ["Typed codebase", "CI pipeline", "Preview deploys"],
-  },
-  {
-    id: "deploy",
-    label: "Deploy",
-    icon: "cloud",
-    description:
-      "Automate the path to production: reproducible builds, progressive rollouts, and one-command rollbacks.",
-    outputs: ["Zero-downtime deploys", "Rollback plan", "Runbooks"],
+      "Write the Semgrep pattern, scoped tightly enough that generic code doesn't match, until every fixture passes.",
+    outputs: ["YAML rule", "Metadata", "Passing fixtures"],
   },
   {
     id: "measure",
     label: "Measure",
-    icon: "gauge",
     description:
-      "Instrument what matters — product analytics, tracing, cost, and quality signals — so decisions come from evidence.",
-    outputs: ["Dashboards", "Alerting", "Eval suites"],
+      "Scan the deliberately vulnerable app and score the result against its ground truth: what was caught, what was missed, what was wrong.",
+    outputs: ["Precision", "Recall", "Missed cases"],
   },
   {
-    id: "iterate",
-    label: "Iterate",
-    icon: "refresh",
+    id: "automate",
+    label: "Automate",
     description:
-      "Feed real usage back into the roadmap. Double down on what works, delete what doesn't, and keep the system simple.",
-    outputs: ["Prioritized backlog", "Refactor budget", "Next bet"],
+      "Run validation, fixtures and examples in GitHub Actions on every push, with the Semgrep version pinned.",
+    outputs: ["CI workflow", "Pinned versions", "Green main"],
+  },
+  {
+    id: "document",
+    label: "Document",
+    description:
+      "Record the fix, the false positives and the known misses, then feed the misses back in as the next round of tests.",
+    outputs: ["Remediation guide", "Limitations", "Next fixtures"],
   },
 ];
