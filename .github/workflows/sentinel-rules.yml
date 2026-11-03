@@ -10,8 +10,8 @@ permissions:
 
 env:
   SEMGREP_VERSION: "1.180.0"
-  # Sentinel Rules v0.1.0 (merge commit of Hemanth2709/SentinelRules#6).
-  SENTINEL_RULES_REF: b6e304d988c84962b6aa976e46de64a08292c3b1
+  # Sentinel Rules v0.1.1 (commit the v0.1.1 tag points to).
+  SENTINEL_RULES_REF: 94b6ef50ef2979cfc6821b5d006fe5bb49670148
 
 jobs:
   scan:
