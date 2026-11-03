@@ -3,36 +3,49 @@ import type { NavItem, SiteConfig, SocialLink } from "./types";
 export const site: SiteConfig = {
   name: "Hemanth G",
   initials: "HG",
-  title: "Software Engineer · Application Security",
-  tagline: "I build web products, and the tooling that finds security bugs in them.",
+  title: "Software Engineer",
+  heroLabel: "Software Engineer / Application Security",
+  headline: ["Engineering software.", "Securing what matters."],
   intro:
-    "Software engineer working with Next.js and NestJS on AWS, moving into application security. Right now that means Sentinel-Security: Semgrep rules that catch NestJS and Next.js vulnerabilities, measured against a deliberately vulnerable app.",
+    "Full stack developer with 3.5+ years building web applications, backend systems and the cloud infrastructure underneath them. I work in TypeScript, Next.js, Node.js and AWS, and I'm moving deliberately into application security.",
+  description:
+    "Full stack developer building web apps and the cloud infrastructure behind them, with a growing focus on application security.",
   url: "https://hemanthg.dev",
-  email: "geniushemu2000@gmail.com",
-  location: "India · Remote-friendly",
+  email: "hemanth.dev.g@gmail.com",
+  location: "Bengaluru, India",
+  resumeUrl: null,
   keywords: [
-    "Application Security",
-    "AppSec",
+    "Hemanth G",
+    "Full Stack Developer",
     "Software Engineer",
-    "Semgrep",
-    "Static analysis",
-    "NestJS",
-    "Next.js",
-    "TypeScript",
+    "Application Security",
+    "Cloud Infrastructure",
     "DevSecOps",
+    "AWS",
+    "Next.js",
+    "Node.js",
+    "NestJS",
+    "Semgrep",
+    "Bengaluru",
   ],
 };
 
 export const socials: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/Hemanth2709", icon: "github" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/hemanth-g", icon: "linkedin" },
-  { label: "Email", href: "mailto:geniushemu2000@gmail.com", icon: "mail" },
+  { label: "GitHub", href: "https://github.com/Hemanth2709", icon: "github", handle: "Hemanth2709" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/hemanthg-dev/",
+    icon: "linkedin",
+    handle: "hemanthg-dev",
+  },
 ];
 
 export const navigation: NavItem[] = [
+  { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Approach", href: "#approach" },
-  { label: "Toolkit", href: "#toolkit" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Security", href: "#security" },
   { label: "Contact", href: "#contact" },
 ];

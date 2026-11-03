@@ -1,26 +1,36 @@
 /**
  * Content-layer types.
  *
- * Every section of the site renders from typed data in `src/data`.
- * Edit the data files — never the components — to change content.
+ * Every section renders from typed data in `src/data`. Edit the data
+ * files, not the components, to change content. Only verified facts go
+ * in: nothing planned is shown as done.
  */
 
 export interface SiteConfig {
   name: string;
   initials: string;
+  /** Short title used in metadata, e.g. "Software Engineer". */
   title: string;
-  tagline: string;
+  /** Small label above the hero headline. */
+  heroLabel: string;
+  /** Hero headline, one entry per line. */
+  headline: string[];
   intro: string;
+  /** One-line description for metadata and the footer. */
+  description: string;
   url: string;
   email: string;
   location: string;
+  /** Set to a path in /public once a resume PDF exists; links hide while null. */
+  resumeUrl: string | null;
   keywords: string[];
 }
 
 export interface SocialLink {
   label: string;
   href: string;
-  icon: "github" | "linkedin" | "mail";
+  icon: "github" | "linkedin";
+  handle: string;
 }
 
 export interface NavItem {
@@ -28,9 +38,36 @@ export interface NavItem {
   href: `#${string}`;
 }
 
-export interface AboutPrinciple {
+export interface TimelineItem {
+  period: string;
   title: string;
-  description: string;
+  detail: string;
+}
+
+export interface ExperienceGroup {
+  /** Optional heading for a group of highlights, e.g. "Infrastructure & DevOps". */
+  title?: string;
+  items: string[];
+}
+
+export interface ExperienceEntry {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  note?: string;
+  groups: ExperienceGroup[];
+  technologies: string[];
+}
+
+export type ProjectStatus = "Released" | "Live" | "Professional work" | "In progress" | "Planned";
+
+/** One box in a simplified architecture diagram. */
+export interface FlowNode {
+  label: string;
+  detail?: string;
+  /** Highlight the node that carries the security control. */
+  emphasis?: boolean;
 }
 
 export interface ProjectLink {
@@ -41,25 +78,26 @@ export interface ProjectLink {
 export interface Project {
   slug: string;
   name: string;
-  /** Short label shown above the name, e.g. "Semgrep rule pack". */
   category: string;
-  timeframe: string;
-  /** Current state, stated plainly (e.g. "v0.1.1 released"). */
-  status: string;
+  status: ProjectStatus;
+  /** Where the work was done, e.g. "Ralecon IT Consulting Services". */
+  context: string;
   summary: string;
-  problem: string;
-  solution: string;
-  /** How it works, one line per part. */
-  architecture: string[];
-  decisions: string[];
-  results: string[];
-  /** What it cannot do. Shown with the same weight as results. */
-  limitations: string[];
+  problem?: string;
+  contribution: string;
+  highlights: string[];
   technologies: string[];
+  flow: FlowNode[];
   links: ProjectLink[];
 }
 
-/** One rule in the coverage table. */
+export interface PlannedProject {
+  name: string;
+  category: string;
+  summary: string;
+  technologies: string[];
+}
+
 export interface CoverageRow {
   detects: string;
   rule: string;
@@ -68,7 +106,6 @@ export interface CoverageRow {
   severity: "ERROR" | "WARNING";
 }
 
-/** Benchmark result for one release of the rule pack. */
 export interface BenchmarkRow {
   release: string;
   findings: number;
@@ -78,38 +115,14 @@ export interface BenchmarkRow {
   recall: string;
 }
 
-/** A project that has not been built yet. */
-export interface PlannedProject {
-  name: string;
-  focus: string;
-  summary: string;
-}
-
-export interface ProcessStep {
-  id: string;
-  label: string;
-  description: string;
-  outputs: string[];
-}
-
-export interface ExperienceEntry {
-  company: string;
-  role: string;
-  period: string;
-  location: string;
-  summary: string;
-  achievements: string[];
-  technologies: string[];
-}
-
-export interface ToolkitCategory {
+export interface SkillDomain {
   title: string;
+  /** Where the skill is evidenced, shown as a small note. */
+  evidence: string;
   items: string[];
 }
 
-export interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
-  description: string;
+export interface Achievement {
+  title: string;
+  detail: string;
 }

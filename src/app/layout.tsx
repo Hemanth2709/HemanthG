@@ -26,10 +26,10 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.title}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} · ${site.title}`,
+    template: `%s · ${site.name}`,
   },
-  description: site.tagline,
+  description: site.description,
   keywords: site.keywords,
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — ${site.title}`,
-    description: site.tagline,
+    title: `${site.name} · ${site.title}`,
+    description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.title}`,
-    description: site.tagline,
+    title: `${site.name} · ${site.title}`,
+    description: site.description,
   },
   robots: {
     index: true,
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
+  themeColor: "#090b10",
   colorScheme: "dark",
 };
 
@@ -64,7 +64,7 @@ function PersonJsonLd() {
     "@type": "Person",
     name: site.name,
     jobTitle: site.title,
-    description: site.tagline,
+    description: site.description,
     email: `mailto:${site.email}`,
     url: site.url,
     sameAs: socials.filter((social) => social.href.startsWith("http")).map((social) => social.href),
@@ -83,6 +83,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
       <body>
+        {/* Without JavaScript, scroll reveals never fire: show everything. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <PersonJsonLd />
         {children}
       </body>

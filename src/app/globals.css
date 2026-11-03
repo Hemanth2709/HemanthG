@@ -5,21 +5,25 @@
 /* ---------------------------------- */
 
 @theme {
-  /* Neutral near-black, warm white text, one amber accent.
-     Amber doubles as the WARNING severity; red is reserved for ERROR. */
-  --color-background: #0a0a0b;
-  --color-surface: #111113;
-  --color-raised: #18181b;
-  --color-foreground: #f2f2ef;
-  --color-muted: #a3a3a8;
-  --color-subtle: #87878e; /* ≥4.5:1 on --color-background (WCAG AA) */
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.15);
-  --color-accent: #e8a53e;
-  --color-accent-bright: #f3c06f;
-  --color-accent-dim: rgba(232, 165, 62, 0.12);
-  --color-danger: #f07a68;
-  --color-pass: #82c99e;
+  /* Dark editorial palette. Blue is the primary accent; violet is used
+     sparingly (identity/auth details). Severity colours appear only in
+     security findings. */
+  --color-background: #090b10;
+  --color-surface: #10141c;
+  --color-raised: #151b25;
+  --color-foreground: #f1f5f9;
+  --color-muted: #94a3b8;
+  --color-subtle: #7c8ba1; /* ≥4.5:1 on background (WCAG AA) */
+  --color-faint: #64748b; /* decorative / large text only */
+  --color-line: #1c2330;
+  --color-line-strong: #252d3a;
+  --color-accent: #65a9ff;
+  --color-accent-bright: #94c4ff;
+  --color-accent-dim: rgba(101, 169, 255, 0.1);
+  --color-violet: #a78bfa;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-warn: #fbbf24;
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -29,11 +33,11 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Entrance animations for above-the-fold content (no JS dependency).
-   LCP-safe: the headline variant animates transform only, never opacity. */
+/* Hero entrance (no JS dependency). The headline variant animates
+   transform only, so it is painted at first frame and LCP stays early. */
 @keyframes rise-only {
   from {
-    transform: translate3d(0, 16px, 0);
+    transform: translate3d(0, 14px, 0);
   }
   to {
     transform: translate3d(0, 0, 0);
@@ -43,11 +47,40 @@
 @keyframes rise-fade {
   from {
     opacity: 0;
-    transform: translate3d(0, 16px, 0);
+    transform: translate3d(0, 14px, 0);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* A short bright dash travelling along a connection path. */
+@keyframes travel {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -420;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
   }
 }
 
@@ -70,7 +103,7 @@ body {
 }
 
 ::selection {
-  background: rgba(232, 165, 62, 0.3);
+  background: rgba(101, 169, 255, 0.3);
   color: #fff;
 }
 
@@ -81,17 +114,17 @@ body {
   background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #26262a;
+  background: #1f2633;
   border-radius: 8px;
   border: 2px solid var(--color-background);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #35353a;
+  background: #2b3444;
 }
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
   border-radius: 4px;
 }
 
@@ -106,6 +139,9 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .net-pulse {
+    display: none;
+  }
 }
 
 /* ---------------------------------- */
@@ -115,48 +151,62 @@ body {
 @utility container-site {
   margin-inline: auto;
   width: 100%;
-  max-width: 72rem;
+  max-width: 80rem;
   padding-inline: 1.25rem;
   @media (min-width: 768px) {
     padding-inline: 2.5rem;
   }
+  @media (min-width: 1280px) {
+    padding-inline: 3.5rem;
+  }
 }
 
 @utility glass {
-  background: rgba(10, 10, 11, 0.8);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  background: rgba(9, 11, 16, 0.78);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
 }
 
-@utility eyebrow {
+/* Small uppercase section label */
+@utility label {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-subtle);
 }
 
-/* Skip rendering work for below-the-fold sections until they approach
-   the viewport. contain-intrinsic-size reserves space so scrollbar and
-   layout stay stable (no CLS). */
+/* Skip rendering below-the-fold sections until they approach the
+   viewport; the intrinsic size keeps the scrollbar stable (no CLS). */
 @utility cv-auto {
   content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
+  contain-intrinsic-size: auto 900px;
 }
 
-/* Above-the-fold entrance helpers. --enter-delay staggers children. */
 @utility anim-rise {
-  animation: rise-fade 0.7s var(--ease-out-expo) both;
+  animation: rise-fade 0.6s var(--ease-out-expo) both;
   animation-delay: var(--enter-delay, 0s);
 }
 
 @utility anim-rise-lcp {
-  /* transform-only: element is painted immediately, keeping LCP early */
-  animation: rise-only 0.7s var(--ease-out-expo) both;
+  animation: rise-only 0.6s var(--ease-out-expo) both;
   animation-delay: var(--enter-delay, 0s);
 }
 
-/* Stage panel switches: content is re-keyed in React, this plays on mount */
-.panel-in {
-  animation: rise-fade 0.3s ease-out both;
+@utility anim-fade {
+  animation: fade 1.2s ease-out both;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+/* Hero network: pulses and breathing nodes */
+.net-pulse {
+  stroke-dasharray: 10 410;
+  animation: travel var(--dur, 6s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.net-breathe {
+  animation: breathe 4s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
