@@ -3,10 +3,26 @@
 ## Visitor privacy (applies to every milestone)
 
 The site does not and will not implement browser fingerprinting, device or
-local-network scanning, port probing, IP/location collection for display,
-collection of device details, or persistent visitor tracking.
+local-network scanning, port probing, or persistent visitor tracking.
 
-The site has **no analytics, no cookies and no client-side storage**. Fonts
+**Changed in M8 at the owner's request:** the hero's Visitor Intelligence
+panel shows visitors their *own* public IP, approximate location and
+browser environment. The data is never stored, logged or shared, and no
+third party is called. See
+[11](11-hero-visitor-intelligence-and-animation.md#privacy-and-data-retention).
+The earlier rule against displaying IP or location is replaced by these
+limits:
+
+- display only, to the same visitor;
+- IP and location come only from the host's own edge headers, trusted only
+  on Vercel;
+- device details are computed in the browser and never leave it;
+- nothing is persisted;
+- the endpoint is never cached.
+
+The site has **no analytics, no cookies and no client-side storage**. The
+host (Vercel) keeps its own standard request logs, as any host does. The
+site adds nothing to them. Fonts
 are self-hosted by `next/font`, so there are no third-party font requests.
 
 Threatscape (M2) keeps all state in React memory. It sends no requests, uses

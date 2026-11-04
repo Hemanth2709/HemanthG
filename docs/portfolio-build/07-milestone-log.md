@@ -60,3 +60,18 @@ reduced-motion checks, the implementation handover document.
 
 **Outcome:** done; results in [06](06-testing-and-validation.md#m7-2026-11-04),
 handover in [IMPLEMENTATION-HANDOVER.md](IMPLEMENTATION-HANDOVER.md).
+
+## M8 · Hero: Visitor Intelligence and simulated security session (2026-11-04)
+
+**Scope:**
+- a Visitor Intelligence panel showing the visitor's own IP, approximate
+  location and browser environment, without storage or third parties;
+- a continuously animated, deterministic, simulated security session
+  integrated into the hero background: 6 illustrative workflows plus 1
+  built from real CISA KEV and NVD data;
+- new intro copy and a GitHub button.
+
+**Outcome:** implemented and tested locally; see
+[11](11-hero-visitor-intelligence-and-animation.md) and
+[06](06-testing-and-validation.md). **Not yet verified on the deployed
+site.**

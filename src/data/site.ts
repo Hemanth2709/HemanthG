@@ -7,7 +7,7 @@ export const site: SiteConfig = {
   heroLabel: "Software Engineer / Application Security",
   headline: ["Engineering software.", "Securing what matters."],
   intro:
-    "Full stack developer with 3.5+ years building web applications, backend systems and the cloud infrastructure underneath them. I work in TypeScript, Next.js, Node.js and AWS, and I'm moving deliberately into application security.",
+    "I build modern web applications, scalable backend systems and cloud infrastructure, with a growing focus on application security and secure engineering practices.",
   description:
     "Full stack developer building web apps and the cloud infrastructure behind them, with a growing focus on application security.",
   /** Where the site is actually served (Vercel production). Change this if a custom domain is added. */

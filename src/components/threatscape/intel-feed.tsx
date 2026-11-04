@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 
-import { fetchGhsa, fetchKev, fetchNvd } from "@/lib/intel/fetchers";
+import { loadIntel } from "@/lib/intel/load";
 import type { IntelResult } from "@/lib/intel/types";
 
 import { RelativeTime } from "./relative-time";
@@ -69,7 +69,8 @@ function Column({ result }: { result: IntelResult }) {
  * (re)generated, every six hours. Visitors' browsers never call these APIs.
  */
 export async function IntelFeed() {
-  const results = await Promise.all([fetchKev(), fetchNvd(), fetchGhsa()]);
+  const { kev, nvd, ghsa } = await loadIntel();
+  const results = [kev, nvd, ghsa];
   return (
     <div className="grid gap-8 lg:grid-cols-3 lg:gap-6">
       {results.map((result) => (
