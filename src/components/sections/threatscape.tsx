@@ -1,6 +1,8 @@
 import { Reveal } from "@/components/effects/reveal";
+import { IntelFeed } from "@/components/threatscape/intel-feed";
 import { ThreatscapeLoader } from "@/components/threatscape/loader";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Subsection } from "@/components/ui/subsection";
 
 /** THREATSCAPE: an interactive, simulated architecture to explore attacks and defences. */
 export function Threatscape() {
@@ -19,6 +21,10 @@ export function Threatscape() {
         <p className="mt-4 font-mono text-[11px] text-subtle">
           A local simulation with synthetic data. Nothing is sent anywhere and nothing about you is collected.
         </p>
+
+        <Subsection id="in-the-wild" title="In the wild" note="Public sources, refreshed on the server every 6 hours">
+          <IntelFeed />
+        </Subsection>
       </div>
     </section>
   );

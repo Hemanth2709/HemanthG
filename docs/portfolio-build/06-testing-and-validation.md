@@ -36,3 +36,11 @@ Each entry records commands actually run and their real output.
 |---|---|---|
 | Types / build / unit tests | `npx tsc --noEmit`, `npx next build`, `npm test` | Pass; 31/31 |
 | 3D in a browser | Playwright with SwiftShader WebGL at 1440×1000: Threat view → 3D | Canvas renders. Labels "Browser · 01 … Database · 05" mark the path. Three JS chunks load only on the switch to 3D. Clicking the API box opens "API service" in the inspector. Back to 2D restores 8 nodes. No console errors |
+
+## M5 (2026-11-04)
+
+| Check | Command | Result |
+|---|---|---|
+| Unit tests | `npm test` | 40/40 (9 new fetcher tests) |
+| Build | `npx next build` | Pass; `/` is now ISR with Revalidate 6h |
+| Live render | Production server + Playwright | KEV: 5 real entries (catalogue 2026.11.03). NVD: 5 real critical CVEs from the last 7 days with CVSS. GitHub: "Unavailable: the source returned HTTP 401" (sandbox proxy). No browser requests to external hosts; no console errors |

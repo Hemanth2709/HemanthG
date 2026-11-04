@@ -2,7 +2,7 @@
   "name": "hemanthg-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Hemanth G \u2014 AI Product Engineer. Premium portfolio built with Next.js.",
+  "description": "Hemanth G — AI Product Engineer. Premium portfolio built with Next.js.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,6 +19,7 @@
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "server-only": "0.0.1",
     "tailwind-merge": "^2.6.0",
     "three": "0.180.0"
   },

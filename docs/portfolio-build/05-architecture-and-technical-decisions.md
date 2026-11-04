@@ -51,3 +51,16 @@ scanning upload).
   as props; there is no 3D-specific model to keep in sync.
 - **Structure editing only in 2D.** Dragging in 3D is imprecise and hard to
   make accessible; the brief asks for keyboard accessibility.
+
+## M5 decisions
+
+- **Server-side fetching with ISR, no database.** The brief says not to add
+  a database unless persistence is required. Page-level `revalidate = 6h`
+  gives caching, background refresh and stale-on-error from the platform.
+- **No client-side calls.** They would expose visitors to third-party
+  requests and rate limits; the server fetches once per regeneration.
+- **`server-only@0.0.1`** guards the fetchers from being bundled for the
+  browser, where the optional API keys would leak.
+- Optional environment variables: `NVD_API_KEY` (higher NVD rate limit) and
+  `GITHUB_TOKEN` (a fine-grained token with no permissions, for the advisory
+  API's authenticated rate limit). Neither is required.

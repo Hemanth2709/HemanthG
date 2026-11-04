@@ -37,3 +37,11 @@ control placement; the DevSecOps pipeline view.
 desktop only, with selection synced to the inspector.
 
 **Outcome:** done; see [03](03-threatscape-interactions.md#3d-view-m4).
+
+## M5 · Public threat intelligence (2026-11-04)
+
+**Scope:** a curated, sourced, timestamped and cached feed from CISA KEV,
+NVD and GitHub advisories, resilient to upstream failure.
+
+**Outcome:** done for KEV and NVD (seen live). GitHub is implemented and
+unit-tested but not yet seen live; see [09](09-public-threat-intelligence.md).

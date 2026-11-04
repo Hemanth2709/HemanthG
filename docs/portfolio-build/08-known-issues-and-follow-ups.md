@@ -12,3 +12,5 @@
 | 10 | The model is deliberately simplified: one shortest path, one entry point, no timing or probability | M3 | By design; it explains concepts, it does not score risk |
 | 11 | The 3D view does not follow the active step in Threat view (it highlights the whole path) | M4 | Small follow-up: emphasise the active step's box |
 | 12 | The 3D canvas is not keyboard-operable; the same information and selection are available in the 2D canvas and inspector | M4 | By design; documented in the canvas `aria-label` |
+| 13 | The GitHub advisory column could not be verified live from the development sandbox (proxy returns 401) | M5 | Check on the Vercel preview; if rate-limited there, add a `GITHUB_TOKEN` |
+| 14 | The KEV feed is about 1.8 MB, close to Next.js's 2 MB fetch-cache limit; above it the data is not cached per fetch (the page is still cached by ISR) | M5 | Acceptable; switch to the CSV or a filtered mirror if it grows past 2 MB |

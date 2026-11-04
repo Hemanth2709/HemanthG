@@ -16,6 +16,9 @@ const Journey = dynamic(() => import("@/components/sections/journey").then((m) =
 const Writing = dynamic(() => import("@/components/sections/writing").then((m) => m.Writing));
 const Contact = dynamic(() => import("@/components/sections/contact").then((m) => m.Contact));
 
+/** Regenerate the page (and the public threat feed in it) every six hours. */
+export const revalidate = 21600;
+
 export default function HomePage() {
   return (
     <>

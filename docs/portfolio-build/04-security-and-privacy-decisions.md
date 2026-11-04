@@ -18,3 +18,10 @@ rendering and is never recorded.
 
 Planned in M6: real security headers in `next.config` and a section that
 reports the deployed site's actual response headers.
+
+## Public threat feed (M5)
+
+The feed is fetched by the server; visitors' browsers make no requests to
+NVD, CISA or GitHub, and nothing about the visitor is involved. Optional API
+keys are read from server environment variables and never reach the client
+bundle (`server-only`).
