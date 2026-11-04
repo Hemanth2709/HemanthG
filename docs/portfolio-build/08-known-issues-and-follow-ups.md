@@ -19,3 +19,7 @@
 | 17 | Vercel preview deployments use the toolbar script from vercel.live, which the CSP blocks on previews | M6 | Production is unaffected; allow `https://vercel.live` only if the toolbar is wanted on previews |
 | 18 | The `site.url` was changed from `hemanthg.dev` (does not resolve) to `https://hemanth-g-portfolio.vercel.app` | M6 | Owner to confirm, or supply a custom domain |
 | 19 | The scroll reveal needs scroll-driven animation support (Chromium 115+, Safari 26); elsewhere content appears without animation | M7 | By design |
+| 20 | Visitor Intelligence's Vercel-header path verified only locally (`VERCEL=1`, injected headers) | M8 | Check the panel on the deployed site |
+| 21 | No ISP field: it would need a third-party IP lookup | M8 | By design (privacy); revisit only with explicit consent to a provider |
+| 22 | Mobile Lighthouse performance 91–95 vs 95–96 on `main` (about 13 KB more JS and HTML) | M8 | Acceptable; the animation is lazy and the first frame is not hydrated |
+| 23 | The hero's threat-intel workflow can be up to 6 h old (ISR) | M8 | Shows its retrieval time |

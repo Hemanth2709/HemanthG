@@ -276,7 +276,9 @@ Detail: [04](04-security-and-privacy-decisions.md) and
 
 **Visitor privacy**
 - No analytics, cookies, `localStorage` or `sessionStorage`.
-- No fingerprinting, network or port probing, or IP or location display.
+- No fingerprinting or network or port probing. Since M8 the hero shows
+  visitors their own IP and approximate location, read from Vercel's edge
+  headers, not stored and not cached (see the M8 addendum).
 - Fonts are self-hosted with `next/font`.
 - The browser makes no requests to external hosts (verified in
   Playwright).
@@ -441,3 +443,102 @@ posture section reflects the new headers.
 7. Publish articles and list them in Research & writing.
 8. Consider a nonce-based CSP only if moving to dynamic rendering is
    acceptable.
+
+---
+
+## Addendum: M8, hero Visitor Intelligence and simulated session (2026-11-04)
+
+This was a separate brief from the owner, implemented after M1–M7 had been
+merged. Full detail is in
+[11-hero-visitor-intelligence-and-animation.md](11-hero-visitor-intelligence-and-animation.md);
+test evidence is in [06](06-testing-and-validation.md).
+
+**Change summary**
+1. **Visitor Intelligence panel** (left column, below the actions).
+   - Network: public IP and approximate city, region and country, from
+     `GET /api/visitor`. That endpoint reads Vercel's edge headers, trusts
+     them only when `VERCEL=1`, validates the values, is never cached, and
+     stores nothing.
+   - Device: browser, OS, screen, viewport, DPR, language, timezone and
+     connection, read in the browser and never sent anywhere.
+   - No ISP field, because that needs a third-party IP lookup.
+2. **Simulated security session** (right side, integrated into the
+   background).
+   - A deterministic engine (`compile` / `frameAt`) drives 7 workflows:
+     SentinelRules (real rule IDs, CWEs and OWASP mappings), Linux, container,
+     secure code review, cloud posture, DevSecOps, and threat intel built
+     from real CISA KEV and NVD data.
+   - Workflows 1–6 are labelled "Simulated session · illustrative output ·
+     not a live scan".
+   - The first frame is server HTML that is never hydrated. The live
+     animation loads lazily after idle, only on screen and never under
+     reduced motion.
+3. **Hero copy:** the intro uses the owner's new text, a GitHub button was
+   added, and the facts strip was removed. The Resume button shows only when
+   `site.resumeUrl` is set.
+4. **Shared intel loader:** `src/lib/intel/load.ts` (React `cache`). The
+   "In the wild" feed now reads from it as well.
+
+**Files**
+- **Created:**
+  - `src/app/api/visitor/route.ts`;
+  - `src/lib/visitor/{types,network,user-agent}.ts` and `visitor.test.ts`;
+  - `src/lib/intel/load.ts`;
+  - `src/components/hero/`:
+    - `workflow-engine.ts` and `workflow-engine.test.ts`;
+    - `workflow-data.ts` and `workflow-intel.ts`;
+    - `stream-lines.tsx`, `code-stream.tsx` and `security-indicators.tsx`;
+    - `security-animation.tsx`, `static-session.tsx` and
+      `session-activator.tsx`;
+    - `hero-background.tsx` and `visitor-panel.tsx`;
+  - `docs/portfolio-build/11-hero-visitor-intelligence-and-animation.md`;
+  - screenshots `shots/hero-*.png`.
+- **Modified:**
+  - `src/components/sections/hero.tsx`;
+  - `src/data/site.ts` (intro);
+  - `src/app/globals.css` (hero tokens `cyan` and `electric`, hero
+    animation CSS; the old hero-network CSS removed);
+  - `src/components/threatscape/intel-feed.tsx` (uses `loadIntel`);
+  - docs 04, 06, 07 and 08, and this file.
+- **Deleted:** `src/components/sections/hero-network.tsx` (the old SVG
+  network diagram).
+
+**Commands and outcomes** (final code):
+- `npm run lint`: 0 problems.
+- `npm test`: 71/71.
+- `npx tsc --noEmit`: pass.
+- `npm run build`: pass; `/` is still ISR, and `/api/visitor` is the only
+  dynamic route.
+- axe: 0 violations.
+- Lighthouse desktop: 100 in all four categories.
+- Lighthouse mobile: performance 91–95 (one cold first run at 72), the
+  other three categories 100. `main` scores 95–96 measured the same way.
+- Layout shift: 0 at all three widths.
+
+**Screenshots** (`shots/`, local production build with injected
+documentation-range IPs):
+
+| File | Shows |
+|---|---|
+| `hero-desktop.png` | Desktop hero, 1440 px |
+| `hero-tablet.png` | Tablet hero, 820 px |
+| `hero-mobile.png` | Phone, first screen |
+| `hero-mobile-full.png` | Phone, whole hero |
+| `hero-visitor-panel.png` | The panel on its own |
+| `hero-animation-1.png` | Cloud posture workflow |
+| `hero-animation-2.png` | DevSecOps workflow |
+| `hero-animation-3.png` | Real threat-intel workflow |
+| `hero-reduced-motion.png` | Reduced-motion frame |
+
+**Deviations from that brief**
+- ISP is omitted, and the privacy note says "…stored by this site"; both
+  for accuracy and privacy, as explained in doc 11.
+- No Framer Motion: CSS and one rAF clock are enough.
+- Workflow 7 uses real data instead of illustrative CVEs, to avoid
+  inventing vulnerability IDs.
+- The brief's sample said "8 security rules"; the real count, 14 rules in
+  12 files, is shown.
+
+**Not yet done or verified**
+- The panel has not been seen on the deployed Vercel site.
+- Mobile performance is a few points below `main`.

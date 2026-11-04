@@ -1,40 +1,41 @@
-import { ArrowDownRight, ArrowRight } from "lucide-react";
+import { ArrowDownRight, ArrowRight, Github } from "lucide-react";
 
-import { HeroNetwork } from "@/components/sections/hero-network";
-import { site } from "@/data/site";
-
-const meta = [
-  { label: "Based in", value: site.location },
-  { label: "Experience", value: "3.5+ years" },
-  { label: "Builds", value: "Full-stack web apps" },
-  { label: "Focus", value: "Application security" },
-];
+import { HeroBackground } from "@/components/hero/hero-background";
+import { SessionActivator } from "@/components/hero/session-activator";
+import { StaticSession } from "@/components/hero/static-session";
+import { VisitorPanel } from "@/components/hero/visitor-panel";
+import { WORKFLOWS } from "@/components/hero/workflow-data";
+import { intelWorkflow } from "@/components/hero/workflow-intel";
+import { site, socials } from "@/data/site";
+import { loadIntel } from "@/lib/intel/load";
 
 const delay = (seconds: number) => ({ "--enter-delay": `${seconds}s` }) as React.CSSProperties;
+const github = socials.find((social) => social.icon === "github");
 
 /**
- * Server component. The entrance is CSS-only, so the hero is readable
- * before (and without) JavaScript. The headline animates transform only.
+ * Two layers. Content (left): positioning, headline, intro, actions and the
+ * Visitor Intelligence panel; server-rendered with CSS-only entrance.
+ * Stage (right on large screens, a short band below the content on smaller
+ * ones): the simulated security session over an ambient background, with
+ * no container edges, masked into the page. The threat-intel workflow uses
+ * the same real data as the "In the wild" feed (fetched once per ISR run).
  */
-export function Hero() {
+export async function Hero() {
+  const { kev, nvd } = await loadIntel();
+  const workflows = [...WORKFLOWS, intelWorkflow(kev, nvd)];
+
   return (
     <section id="home" className="relative scroll-mt-20 overflow-hidden" aria-label="Introduction">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[38rem]"
-        style={{
-          background: "radial-gradient(ellipse 55% 60% at 70% 0%, rgba(101,169,255,0.07), transparent 70%)",
-        }}
-      />
+      <HeroBackground />
 
-      <div className="container-site relative grid items-center gap-12 pt-28 pb-16 md:pt-36 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:pb-24">
+      <div className="container-site relative z-10 grid pt-28 pb-6 md:pt-36 lg:min-h-[54rem] lg:grid-cols-[minmax(0,35rem)_1fr] lg:gap-10 lg:pb-24 xl:grid-cols-[minmax(0,37rem)_1fr]">
         <div>
           <p className="label anim-rise text-accent!" style={delay(0.1)}>
             {site.heroLabel}
           </p>
 
           <h1
-            className="anim-rise-lcp mt-6 font-display text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.035em] text-foreground sm:text-6xl xl:text-[4.25rem]"
+            className="anim-rise-lcp mt-6 font-display text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.035em] text-foreground sm:text-6xl xl:text-[4.1rem]"
             style={delay(0.18)}
           >
             {site.headline.map((line, index) => (
@@ -51,7 +52,7 @@ export function Hero() {
             {site.intro}
           </p>
 
-          <div className="anim-rise mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style={delay(0.4)}>
+          <div className="anim-rise mt-9 flex flex-wrap items-center gap-x-4 gap-y-4" style={delay(0.4)}>
             <a
               href="#work"
               className="group inline-flex h-11 items-center gap-2 rounded-full bg-foreground pr-4 pl-5 text-sm font-medium text-background transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-bright"
@@ -59,38 +60,47 @@ export function Hero() {
               Explore my work
               <ArrowDownRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>
+            {github ? (
+              <a
+                href={github.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong bg-background/40 px-5 text-sm text-foreground transition-colors duration-200 hover:border-accent/60"
+              >
+                <Github className="size-4" aria-hidden />
+                GitHub
+              </a>
+            ) : null}
             {site.resumeUrl ? (
               <a
                 href={site.resumeUrl}
-                className="inline-flex h-11 items-center rounded-full border border-line-strong px-5 text-sm text-foreground transition-colors duration-200 hover:border-accent/60"
+                className="inline-flex h-11 items-center rounded-full border border-line-strong bg-background/40 px-5 text-sm text-foreground transition-colors duration-200 hover:border-accent/60"
               >
-                View resume
+                Resume
               </a>
             ) : null}
             <a
               href="#contact"
-              className="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-foreground"
+              className="group ml-1 inline-flex items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-foreground"
             >
               Get in touch
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
             </a>
           </div>
 
-          <dl
-            className="anim-rise mt-14 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6 sm:grid-cols-4"
-            style={delay(0.55)}
-          >
-            {meta.map((item) => (
-              <div key={item.label}>
-                <dt className="label">{item.label}</dt>
-                <dd className="mt-1.5 text-sm text-foreground">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="anim-rise mt-10 max-w-[35rem]" style={delay(0.55)}>
+            <VisitorPanel />
+          </div>
         </div>
+        <div aria-hidden className="hidden lg:block" />
+      </div>
 
-        <div className="anim-fade mx-auto w-full max-w-[34rem] lg:max-w-none" style={delay(0.35)}>
-          <HeroNetwork />
+      <div aria-hidden className="hero-stage anim-fade relative h-[15rem] md:h-[19rem] lg:absolute lg:top-0 lg:right-0 lg:h-[min(100svh,58rem)] lg:min-h-[44rem] lg:w-[54%]" style={delay(0.5)}>
+        <div className="hero-tilt container-site h-full pt-4 pb-6 lg:max-w-none lg:pt-36 lg:pr-[max(3.5rem,calc((100vw-80rem)/2+3.5rem))] lg:pb-16 lg:pl-20">
+          <div className="relative h-full">
+            <StaticSession workflows={workflows} />
+            <SessionActivator workflows={workflows} />
+          </div>
         </div>
       </div>
     </section>
