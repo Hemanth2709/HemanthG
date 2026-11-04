@@ -1,21 +1,14 @@
 import { Reveal } from "@/components/effects/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { TagList } from "@/components/ui/tag";
 import { experience } from "@/data/experience";
 
-export function Experience() {
+export function ExperienceBody() {
   if (experience.length === 0) return null;
 
   return (
-    <section id="experience" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Experience">
-      <div className="container-site">
-        <SectionHeading
-          index="02"
-          label="Experience"
-          title={["Three roles.", "From mobile apps to production infrastructure."]}
-        />
+    <>
 
-        <ol className="border-t border-line">
+        <ol>
           {experience.map((entry, index) => (
             <li key={entry.company} className="grid gap-8 border-b border-line py-12 md:py-16 lg:grid-cols-12 lg:gap-10">
               <Reveal className="lg:col-span-4">
@@ -25,7 +18,7 @@ export function Experience() {
                     <span className="mx-2 text-faint">/</span>
                     {entry.period}
                   </p>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]">
+                  <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]">
                     {entry.company}
                   </h3>
                   <p className="mt-1.5 text-muted">{entry.role}</p>
@@ -58,7 +51,6 @@ export function Experience() {
             </li>
           ))}
         </ol>
-      </div>
-    </section>
+    </>
   );
 }

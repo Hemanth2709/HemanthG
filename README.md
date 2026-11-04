@@ -54,4 +54,4 @@ src/
 
 ## Security scanning
 
-`.github/workflows/sentinel-rules.yml` scans this repository with Sentinel-Security (pinned to the v0.1.1 commit) on every push and pull request.
+`.github/workflows/sentinel-rules.yml` scans this repository on every push and pull request with the [Sentinel Rules GitHub Action](https://github.com/marketplace/actions/sentinel-rules) v0.2.0 (pinned to its commit SHA). Findings fail the job and are uploaded to the Security tab.

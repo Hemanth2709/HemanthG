@@ -54,7 +54,7 @@ export function Flow({ nodes, caption = "Simplified architecture", stackOnDeskto
           </li>
         ))}
       </ol>
-      <figcaption className="mt-3 font-mono text-[11px] text-faint">{caption}</figcaption>
+      <figcaption className="mt-3 font-mono text-[11px] text-subtle">{caption}</figcaption>
     </figure>
   );
 }

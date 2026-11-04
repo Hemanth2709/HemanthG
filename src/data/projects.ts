@@ -11,18 +11,19 @@ export const featured: Project = {
   name: "Sentinel-Security",
   category: "Application Security / SAST",
   status: "Released",
-  context: "Open source · v0.1.1",
+  context: "Open source · v0.2.0 · GitHub Marketplace",
   summary:
     "Custom Semgrep rules that find security mistakes in NestJS and Next.js code, with tests for every rule and a benchmark that measures how often they're right.",
   problem:
     "General-purpose scanners don't know framework conventions. A ValidationPipe without whitelist, a secret in a NEXT_PUBLIC_ variable or CORS that trusts any origin all look like ordinary code, so they reach review, or production, unflagged.",
   contribution:
-    "Designed and wrote all ten rules, the test fixtures, the deliberately vulnerable benchmark app, the scoring and the CI pipeline.",
+    "Designed and wrote all fourteen rules, the test fixtures, the deliberately vulnerable benchmark app, the scoring, the CI pipeline and the GitHub Action.",
   highlights: [
     "Each rule is mapped to a CWE and an OWASP category, with a vulnerable example, a fix and the reasoning",
-    "47 must-flag and 47 must-ignore test cases, passing on Linux and Windows",
-    "75% precision and 65% recall on a benchmark app with 26 planted vulnerabilities",
-    "The benchmark found a real miss, which became the v0.1.1 fix",
+    "76 must-flag and 68 must-ignore test cases, all passing in CI",
+    "74% precision and 67% recall on a benchmark app with 30 planted vulnerabilities, every outcome predicted before the scan",
+    "Published as a GitHub Action on the Marketplace, with findings uploaded to GitHub code scanning",
+    "The benchmark found a real miss in v0.1.0, which became the v0.1.1 fix",
   ],
   technologies: ["Semgrep", "TypeScript", "NestJS", "Next.js", "Python", "GitHub Actions"],
   flow: [
@@ -34,7 +35,8 @@ export const featured: Project = {
   ],
   links: [
     { label: "Repository", href: "https://github.com/Hemanth2709/SentinelRules" },
-    { label: "v0.1.1 release", href: "https://github.com/Hemanth2709/SentinelRules/releases/tag/v0.1.1" },
+    { label: "GitHub Marketplace", href: "https://github.com/marketplace/actions/sentinel-rules" },
+    { label: "v0.2.0 release", href: "https://github.com/Hemanth2709/SentinelRules/releases/tag/v0.2.0" },
   ],
 };
 
@@ -199,10 +201,20 @@ export const coverage: CoverageRow[] = [
   { detects: "CORS trusting any origin with credentials", rule: "cors-credentials-any-origin", cwe: "CWE-942", owasp: "A05", severity: "ERROR" },
   { detects: "NestJS routes without a guard", rule: "nestjs-route-missing-guard", cwe: "CWE-862", owasp: "A01", severity: "WARNING" },
   { detects: "Next.js handlers without an auth check", rule: "nextjs-handler-missing-auth-check", cwe: "CWE-862", owasp: "A01", severity: "WARNING" },
+  { detects: "Server requests to a user-chosen URL (SSRF)", rule: "ssrf-user-controlled-url", cwe: "CWE-918", owasp: "A10", severity: "WARNING" },
+  { detects: "Redirects to a user-chosen URL", rule: "open-redirect-user-controlled-url", cwe: "CWE-601", owasp: "A01", severity: "WARNING" },
+  { detects: "Whole request bodies written to the database", rule: "mass-assignment-unfiltered-body", cwe: "CWE-915", owasp: "A08", severity: "WARNING" },
+  { detects: "Request data run with eval or vm", rule: "code-injection-eval-user-input", cwe: "CWE-95", owasp: "A03", severity: "ERROR" },
 ];
 
-/** Ground-truth benchmark: 26 planted vulnerabilities, 20 safe look-alikes. */
+/**
+ * Ground-truth benchmark. Recall is over every planted vulnerability in that
+ * version of the app. v0.1.1 is listed on both app versions so the last two
+ * rows compare like with like.
+ */
 export const benchmark: BenchmarkRow[] = [
-  { release: "v0.1.0", findings: 19, truePositives: 14, falsePositives: 5, precision: "74%", recall: "61%" },
-  { release: "v0.1.1", findings: 20, truePositives: 15, falsePositives: 5, precision: "75%", recall: "65%" },
+  { release: "v0.1.0", app: "26 / 20", findings: 19, truePositives: 14, falsePositives: 5, precision: "74%", recall: "54%" },
+  { release: "v0.1.1", app: "26 / 20", findings: 20, truePositives: 15, falsePositives: 5, precision: "75%", recall: "58%" },
+  { release: "v0.1.1", app: "30 / 24", findings: 20, truePositives: 15, falsePositives: 5, precision: "75%", recall: "50%" },
+  { release: "v0.2.0", app: "30 / 24", findings: 27, truePositives: 20, falsePositives: 7, precision: "74%", recall: "67%" },
 ];

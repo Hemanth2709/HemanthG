@@ -1,7 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/effects/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
 
 import { Benchmark } from "./security-benchmark";
 import { Coverage } from "./security-coverage";
@@ -20,7 +19,7 @@ const practice = [
     points: [
       "Sentinel-Security: SAST rules for NestJS and Next.js",
       "Every rule mapped to a CWE and an OWASP Top 10 category",
-      "Scans this site in CI on every push",
+      "Published as a GitHub Action; scans this site in CI on every push",
     ],
   },
   {
@@ -34,27 +33,15 @@ const practice = [
 ];
 
 const figures = [
-  { value: "10", label: "rules" },
-  { value: "94", label: "test cases" },
-  { value: "75%", label: "precision" },
-  { value: "65%", label: "recall" },
+  { value: "14", label: "rules" },
+  { value: "144", label: "test cases" },
+  { value: "74%", label: "precision" },
+  { value: "67%", label: "recall" },
 ];
 
-export function Security() {
+/** Day-job, open-source and learning columns, shown in Engineering Journey. */
+export function SecurityPractice() {
   return (
-    <section
-      id="security"
-      className="relative scroll-mt-20 border-t border-line bg-surface/40 py-24 md:py-36"
-      aria-label="Security"
-    >
-      <div className="container-site">
-        <SectionHeading
-          index="05"
-          label="Security"
-          title={["Security should be part of engineering,", "not an afterthought."]}
-          description="Security has grown out of my engineering work rather than replacing it. This is what I've done so far, and the evidence for it."
-        />
-
         <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">
           {practice.map((column, index) => (
             <Reveal key={column.title} delay={index * 0.05} className="bg-background p-6 md:p-8">
@@ -70,15 +57,20 @@ export function Security() {
             </Reveal>
           ))}
         </div>
+  );
+}
 
-        <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-4">
+/** Sentinel-Security figures, benchmark and rule tables, shown in Selected Work. */
+export function SentinelEvidence() {
+  return (
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="min-w-0 lg:col-span-4">
             <p className="label">Evidence</p>
             <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-              Sentinel-Security v0.1.1
+              Sentinel-Security v0.2.0
             </h3>
             <p className="mt-4 text-pretty text-sm leading-relaxed text-muted">
-              Measured against a deliberately vulnerable NestJS and Next.js app with 26 planted vulnerabilities and 20
+              Measured against a deliberately vulnerable NestJS and Next.js app with 30 planted vulnerabilities and 24
               safe look-alikes, with each outcome predicted before the scan.
             </p>
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-6">
@@ -102,12 +94,10 @@ export function Security() {
             </a>
           </Reveal>
 
-          <div className="flex flex-col gap-14 lg:col-span-8">
+          <div className="flex min-w-0 flex-col gap-14 lg:col-span-8">
             <Benchmark />
             <Coverage />
           </div>
         </div>
-      </div>
-    </section>
   );
 }

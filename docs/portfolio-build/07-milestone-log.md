@@ -1,0 +1,62 @@
+# 07 · Milestone log
+
+## M1 · Docs, visual system, information architecture (2026-11-04)
+
+**Scope:** documentation skeleton; display and mono typefaces; semantic
+threat/defence colour tokens; new homepage order and navigation.
+
+**Outcome:** done. Hero → Selected work → Engineering journey → Research &
+writing → Contact. See [01](01-information-architecture.md) and
+[02](02-visual-system.md).
+
+**Files:** see the M1 commit; summarised in [05](05-architecture-and-technical-decisions.md).
+
+## M2 · Threatscape core (2026-11-04)
+
+**Scope:**
+- typed graph model and engine;
+- a React Flow workbench with palette, canvas and inspector;
+- Infrastructure, Threat and Defence views and Reset;
+- one guided scenario end to end (SQL injection), with mitigations;
+- a small-screen fallback.
+
+**Outcome:** done; see [03](03-threatscape-interactions.md). The homepage
+now opens with Threatscape as section 01.
+
+## M3 · Scenarios and DevSecOps pipeline (2026-11-04)
+
+**Scope:** XSS, IDOR, SSRF, credential exposure, DDoS (conceptual) and
+privilege escalation scenarios; an input-allowlist control; per-scenario
+control placement; the DevSecOps pipeline view.
+
+**Outcome:** done; see [03](03-threatscape-interactions.md).
+
+## M4 · 3D view (2026-11-04)
+
+**Scope:** a lazy-loaded, layered three.js view of the shared graph state,
+desktop only, with selection synced to the inspector.
+
+**Outcome:** done; see [03](03-threatscape-interactions.md#3d-view-m4).
+
+## M5 · Public threat intelligence (2026-11-04)
+
+**Scope:** a curated, sourced, timestamped and cached feed from CISA KEV,
+NVD and GitHub advisories, resilient to upstream failure.
+
+**Outcome:** done for KEV and NVD (seen live). GitHub is implemented and
+unit-tested but not yet seen live; see [09](09-public-threat-intelligence.md).
+
+## M6 · Security headers and posture (2026-11-04)
+
+**Scope:** real security headers; a section that evaluates the deployed
+site's real response headers; corrected `site.url`.
+
+**Outcome:** done; see [10](10-security-posture.md).
+
+## M7 · Quality pass and handover (2026-11-04)
+
+**Scope:** linting, accessibility audit and fixes, performance, keyboard and
+reduced-motion checks, the implementation handover document.
+
+**Outcome:** done; results in [06](06-testing-and-validation.md#m7-2026-11-04),
+handover in [IMPLEMENTATION-HANDOVER.md](IMPLEMENTATION-HANDOVER.md).

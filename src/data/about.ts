@@ -15,7 +15,7 @@ export const timeline: TimelineItem[] = [
   { period: "2021 – 2023", title: "Swift Ride", detail: "Co-founded; Android developer" },
   { period: "2024 – 2025", title: "Ginger Media Group", detail: "Software Engineer" },
   { period: "2025 – now", title: "Ralecon IT Consulting", detail: "Full Stack Developer" },
-  { period: "2026", title: "Sentinel-Security", detail: "Open-source Semgrep rules, v0.1.1" },
+  { period: "2026", title: "Sentinel-Security", detail: "Open-source Semgrep rules, v0.2.0 on the GitHub Marketplace" },
 ];
 
 export const achievements: Achievement[] = [

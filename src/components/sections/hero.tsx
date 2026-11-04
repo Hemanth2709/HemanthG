@@ -34,7 +34,7 @@ export function Hero() {
           </p>
 
           <h1
-            className="anim-rise-lcp mt-6 text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.035em] text-foreground sm:text-6xl xl:text-[4.25rem]"
+            className="anim-rise-lcp mt-6 font-display text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.035em] text-foreground sm:text-6xl xl:text-[4.25rem]"
             style={delay(0.18)}
           >
             {site.headline.map((line, index) => (
@@ -53,7 +53,7 @@ export function Hero() {
 
           <div className="anim-rise mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style={delay(0.4)}>
             <a
-              href="#projects"
+              href="#work"
               className="group inline-flex h-11 items-center gap-2 rounded-full bg-foreground pr-4 pl-5 text-sm font-medium text-background transition-[background-color,transform] duration-200 hover:-translate-y-px hover:bg-accent-bright"
             >
               Explore my work

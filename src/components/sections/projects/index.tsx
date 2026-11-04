@@ -1,6 +1,8 @@
 import { Reveal } from "@/components/effects/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { SentinelEvidence } from "@/components/sections/security-practice";
 import { Status } from "@/components/ui/status";
+import { Subsection } from "@/components/ui/subsection";
 import { featured, planned, projects } from "@/data/projects";
 
 import { FeaturedProject } from "./featured";
@@ -8,16 +10,20 @@ import { ProjectRow } from "./project-row";
 
 export function Projects() {
   return (
-    <section id="projects" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Projects">
+    <section id="work" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Selected work">
       <div className="container-site">
         <SectionHeading
-          index="03"
-          label="Projects"
+          index="02"
+          label="Selected work"
           title={["Selected work.", "Open source, and what I've built on the job."]}
           description="Professional projects are described only as far as I can share them publicly. Diagrams are simplified."
         />
 
         <FeaturedProject project={featured} />
+
+        <Subsection id="sentinel-evidence" title="Sentinel-Security: the evidence" note="Measured, with predictions recorded first">
+          <SentinelEvidence />
+        </Subsection>
 
         <div className="mt-8 border-t border-line">
           {projects.map((project, index) => (
@@ -33,7 +39,7 @@ export function Projects() {
                 Planned projects
               </h3>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
-                Blueprints, not finished work. Each moves up to the list above only once it's built and tested.
+                Blueprints, not finished work. Each moves up to the list above only once it&apos;s built and tested.
               </p>
             </div>
           </div>
@@ -48,7 +54,7 @@ export function Projects() {
                 <p className="mt-4 text-lg font-medium text-foreground">{item.name}</p>
                 <p className="mt-1 font-mono text-xs text-subtle">{item.category}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.summary}</p>
-                <p className="mt-4 font-mono text-[11px] text-faint">{item.technologies.join(" · ")}</p>
+                <p className="mt-4 font-mono text-[11px] text-subtle">{item.technologies.join(" · ")}</p>
               </li>
             ))}
           </ul>

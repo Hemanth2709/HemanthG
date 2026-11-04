@@ -109,6 +109,8 @@ export interface CoverageRow {
 
 export interface BenchmarkRow {
   release: string;
+  /** Version of the benchmark app: planted vulnerabilities / safe look-alikes. */
+  app: string;
   findings: number;
   truePositives: number;
   falsePositives: number;
@@ -126,4 +128,12 @@ export interface SkillDomain {
 export interface Achievement {
   title: string;
   detail: string;
+}
+
+export interface WritingEntry {
+  title: string;
+  /** What kind of document it is, e.g. "Method", "Learning notes". */
+  kind: string;
+  summary: string;
+  href: string;
 }

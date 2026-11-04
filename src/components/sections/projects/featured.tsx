@@ -26,7 +26,7 @@ export function FeaturedProject({ project }: { project: Project }) {
             <Status status={project.status} />
           </div>
 
-          <h3 className="mt-6 text-4xl font-semibold tracking-[-0.035em] text-foreground md:text-6xl">{project.name}</h3>
+          <h3 className="mt-6 font-display text-4xl font-semibold tracking-[-0.035em] text-foreground md:text-6xl">{project.name}</h3>
           <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted">{project.summary}</p>
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
