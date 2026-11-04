@@ -8,13 +8,12 @@ separate site.
 | # | Section | Anchor | Status |
 |---|---|---|---|
 | – | Hero / introduction | `#home` | Live |
-| 01 | Threatscape | `#threatscape` | Planned (M2) |
-| 01→02 | Selected work | `#work` | Live (M1) |
-| 02→03 | Engineering journey | `#journey` | Live (M1) |
-| 03→04 | Research & writing | `#writing` | Live (M1) |
-| 04→05 | Contact | `#contact` | Live |
+| 01 | Threatscape | `#threatscape` | Live (M2) |
+| 02 | Selected work | `#work` | Live (M1) |
+| 03 | Engineering journey | `#journey` | Live (M1) |
+| 04 | Research & writing | `#writing` | Live (M1) |
+| 05 | Contact | `#contact` | Live |
 
-Section numbers shift by one when Threatscape lands in M2.
 
 ## What moved in M1
 
@@ -25,4 +24,4 @@ Section numbers shift by one when Threatscape lands in M2.
 | Projects (`#projects`) | **Selected work** (`#work`) |
 | – | **Research & writing** (`#writing`): eight real documents from the public SentinelRules repository. No articles are listed because none exist yet |
 
-Navigation: Home, Work, Journey, Writing, Contact (Threatscape added in M2).
+Navigation: Home, Threatscape, Work, Journey, Writing, Contact.

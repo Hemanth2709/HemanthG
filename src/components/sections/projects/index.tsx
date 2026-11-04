@@ -13,7 +13,7 @@ export function Projects() {
     <section id="work" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Selected work">
       <div className="container-site">
         <SectionHeading
-          index="01"
+          index="02"
           label="Selected work"
           title={["Selected work.", "Open source, and what I've built on the job."]}
           description="Professional projects are described only as far as I can share them publicly. Diagrams are simplified."

@@ -9,7 +9,7 @@ export function Writing() {
     <section id="writing" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Research and writing">
       <div className="container-site">
         <SectionHeading
-          index="03"
+          index="04"
           label="Research & writing"
           title={["Written down,", "including what didn't work."]}
           description="Method, results and notes from building Sentinel-Security, published with the code. Articles will appear here when they exist."

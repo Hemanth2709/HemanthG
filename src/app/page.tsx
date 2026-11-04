@@ -6,10 +6,11 @@ import { Hero } from "@/components/sections/hero";
 
 /**
  * Homepage flow (docs/portfolio-build/01-information-architecture.md):
- * Hero → Selected Work → Engineering Journey → Research & Writing → Contact.
+ * Hero → Threatscape → Selected Work → Engineering Journey → Research & Writing → Contact.
  * Below-the-fold sections are code-split; they still server-render, and the
  * `cv-auto` wrappers skip layout and paint while off-screen.
  */
+const Threatscape = dynamic(() => import("@/components/sections/threatscape").then((m) => m.Threatscape));
 const Projects = dynamic(() => import("@/components/sections/projects").then((m) => m.Projects));
 const Journey = dynamic(() => import("@/components/sections/journey").then((m) => m.Journey));
 const Writing = dynamic(() => import("@/components/sections/writing").then((m) => m.Writing));
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Navbar />
       <main id="main">
         <Hero />
+        <Threatscape />
         <div className="cv-auto">
           <Projects />
         </div>

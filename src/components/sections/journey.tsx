@@ -11,7 +11,7 @@ export function Journey() {
   return (
     <section id="journey" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Engineering journey">
       <div className="container-site">
-        <SectionHeading index="02" label="Engineering journey" title={about.headline} />
+        <SectionHeading index="03" label="Engineering journey" title={about.headline} />
         <AboutBody />
 
         <Subsection id="experience" title="Experience" note="Three roles, 2021 to now">

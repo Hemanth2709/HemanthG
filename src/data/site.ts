@@ -42,6 +42,7 @@ export const socials: SocialLink[] = [
 
 export const navigation: NavItem[] = [
   { label: "Home", href: "#home" },
+  { label: "Threatscape", href: "#threatscape" },
   { label: "Work", href: "#work" },
   { label: "Journey", href: "#journey" },
   { label: "Writing", href: "#writing" },
