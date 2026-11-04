@@ -8,38 +8,25 @@ on:
 permissions:
   contents: read
 
-env:
-  SEMGREP_VERSION: "1.180.0"
-  # Sentinel Rules v0.1.1 (commit the v0.1.1 tag points to).
-  SENTINEL_RULES_REF: 94b6ef50ef2979cfc6821b5d006fe5bb49670148
-
 jobs:
   scan:
     name: Scan with Sentinel Rules
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Upload findings to this repository's Security tab (code scanning).
+      security-events: write
     steps:
       - name: Check out portfolio
         uses: actions/checkout@v5
 
-      - name: Check out Sentinel Rules
-        uses: actions/checkout@v5
-        with:
-          repository: Hemanth2709/SentinelRules
-          ref: ${{ env.SENTINEL_RULES_REF }}
-          path: .sentinel-rules
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-
-      - name: Install Semgrep ${{ env.SEMGREP_VERSION }}
-        run: python -m pip install "semgrep==${SEMGREP_VERSION}"
-
       - name: Scan
-        # --error fails the job when any rule reports a finding.
-        run: |
-          semgrep scan --metrics=off \
-            --config .sentinel-rules/rules \
-            --exclude .sentinel-rules \
-            --error .
+        # Sentinel Rules v0.2.0 (the commit the v0.2.0 tag points to), from the
+        # GitHub Marketplace. Pinned to the SHA so a moved tag cannot change CI.
+        uses: Hemanth2709/SentinelRules@3b00ec664028bdd6885b1e33a97b0726598c1c01 # v0.2.0
+        with:
+          # Fail on any finding, ERROR or WARNING, as before.
+          fail-on: warning
+          # Pull requests from forks get a read-only token and cannot upload.
+          upload-sarif: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+          category: sentinel-rules
