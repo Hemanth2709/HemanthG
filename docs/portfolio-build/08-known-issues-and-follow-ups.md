@@ -14,3 +14,6 @@
 | 12 | The 3D canvas is not keyboard-operable; the same information and selection are available in the 2D canvas and inspector | M4 | By design; documented in the canvas `aria-label` |
 | 13 | The GitHub advisory column could not be verified live from the development sandbox (proxy returns 401) | M5 | Check on the Vercel preview; if rate-limited there, add a `GITHUB_TOKEN` |
 | 14 | The KEV feed is about 1.8 MB, close to Next.js's 2 MB fetch-cache limit; above it the data is not cached per fetch (the page is still cached by ISR) | M5 | Acceptable; switch to the CSV or a filtered mirror if it grows past 2 MB |
+| 15 | CSP allows `'unsafe-inline'` scripts (static generation, no nonce) | M6 | Reported as Partial on the site; a nonce CSP would need dynamic rendering |
+| 16 | The posture section shows the previous deployment's headers until the page regenerates after deploying (up to 6 hours) | M6 | Expected with ISR; trigger a redeploy to refresh sooner |
+| 17 | Vercel preview deployments use the toolbar script from vercel.live, which the CSP blocks on previews | M6 | Production is unaffected; allow `https://vercel.live` only if the toolbar is wanted on previews |

@@ -10,7 +10,8 @@ export const site: SiteConfig = {
     "Full stack developer with 3.5+ years building web applications, backend systems and the cloud infrastructure underneath them. I work in TypeScript, Next.js, Node.js and AWS, and I'm moving deliberately into application security.",
   description:
     "Full stack developer building web apps and the cloud infrastructure behind them, with a growing focus on application security.",
-  url: "https://hemanthg.dev",
+  /** Where the site is actually served (Vercel production). Change this if a custom domain is added. */
+  url: "https://hemanth-g-portfolio.vercel.app",
   email: "hemanth.dev.g@gmail.com",
   location: "Bengaluru, India",
   resumeUrl: null,

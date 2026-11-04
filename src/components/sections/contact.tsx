@@ -17,7 +17,7 @@ export function Contact() {
       <div className="container-site relative">
         <Reveal>
           <p className="label flex items-center gap-3">
-            <span className="text-accent">05</span>
+            <span className="text-accent">06</span>
             <span aria-hidden className="h-px w-8 bg-line-strong" />
             Contact
           </p>

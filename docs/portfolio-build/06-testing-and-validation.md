@@ -44,3 +44,13 @@ Each entry records commands actually run and their real output.
 | Unit tests | `npm test` | 40/40 (9 new fetcher tests) |
 | Build | `npx next build` | Pass; `/` is now ISR with Revalidate 6h |
 | Live render | Production server + Playwright | KEV: 5 real entries (catalogue 2026.11.03). NVD: 5 real critical CVEs from the last 7 days with CVSS. GitHub: "Unavailable: the source returned HTTP 401" (sandbox proxy). No browser requests to external hosts; no console errors |
+
+## M6 (2026-11-04)
+
+| Check | Command | Result |
+|---|---|---|
+| Unit tests | `npm test` | 47/47 (7 new posture tests: missing never passes, strong config passes, `'unsafe-inline'` is partial, short HSTS and unsafe referrer are partial, multi-token Referrer-Policy, http fails, unknown reasons) |
+| Headers sent | `curl -D - http://localhost:3100/` | All six headers present with the values in [10](10-security-posture.md) |
+| CSP compatibility | Re-ran the M2, M3 and M4 Playwright scripts with CSP on | Same outcomes, no console errors or CSP violations |
+| Posture section | Playwright | Reports the live production site: HTTPS and HSTS present, four headers missing (the deployed version predates this change) |
+| Layout | Playwright full page at 1440, 820, 390 px | No overflow, after fixing the stepper's scenario select (was 398 px wide at 390 px) |

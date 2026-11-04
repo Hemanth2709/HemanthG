@@ -17,12 +17,12 @@ export default function Stepper() {
   return (
     <div className="flex flex-col gap-6 rounded-xl border border-line-strong bg-background p-4">
       <div className="flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-[13px] text-muted">
+        <label className="flex min-w-0 flex-1 items-center gap-2 text-[13px] text-muted">
           Scenario
           <select
             value={scenario.id}
             onChange={(event) => chooseScenario(event.target.value as ScenarioId)}
-            className="rounded-md border border-line-strong bg-surface px-2 py-1.5 text-[13px] text-foreground"
+            className="min-w-0 flex-1 rounded-md border border-line-strong bg-surface px-2 py-1.5 text-[13px] text-foreground"
           >
             {AVAILABLE_SCENARIOS.map((item) => (
               <option key={item.id} value={item.id}>

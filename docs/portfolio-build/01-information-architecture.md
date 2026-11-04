@@ -12,7 +12,8 @@ separate site.
 | 02 | Selected work | `#work` | Live (M1) |
 | 03 | Engineering journey | `#journey` | Live (M1) |
 | 04 | Research & writing | `#writing` | Live (M1) |
-| 05 | Contact | `#contact` | Live |
+| 05 | This site (security headers) | `#posture` | Live (M6) |
+| 06 | Contact | `#contact` | Live |
 
 
 ## What moved in M1

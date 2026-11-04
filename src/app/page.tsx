@@ -6,7 +6,7 @@ import { Hero } from "@/components/sections/hero";
 
 /**
  * Homepage flow (docs/portfolio-build/01-information-architecture.md):
- * Hero → Threatscape → Selected Work → Engineering Journey → Research & Writing → Contact.
+ * Hero → Threatscape → Selected Work → Engineering Journey → Research & Writing → This site → Contact.
  * Below-the-fold sections are code-split; they still server-render, and the
  * `cv-auto` wrappers skip layout and paint while off-screen.
  */
@@ -14,6 +14,7 @@ const Threatscape = dynamic(() => import("@/components/sections/threatscape").th
 const Projects = dynamic(() => import("@/components/sections/projects").then((m) => m.Projects));
 const Journey = dynamic(() => import("@/components/sections/journey").then((m) => m.Journey));
 const Writing = dynamic(() => import("@/components/sections/writing").then((m) => m.Writing));
+const Posture = dynamic(() => import("@/components/sections/posture").then((m) => m.Posture));
 const Contact = dynamic(() => import("@/components/sections/contact").then((m) => m.Contact));
 
 /** Regenerate the page (and the public threat feed in it) every six hours. */
@@ -40,6 +41,9 @@ export default function HomePage() {
         </div>
         <div className="cv-auto">
           <Writing />
+        </div>
+        <div className="cv-auto">
+          <Posture />
         </div>
         <div className="cv-auto">
           <Contact />

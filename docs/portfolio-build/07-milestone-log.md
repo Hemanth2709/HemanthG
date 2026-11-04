@@ -45,3 +45,10 @@ NVD and GitHub advisories, resilient to upstream failure.
 
 **Outcome:** done for KEV and NVD (seen live). GitHub is implemented and
 unit-tested but not yet seen live; see [09](09-public-threat-intelligence.md).
+
+## M6 · Security headers and posture (2026-11-04)
+
+**Scope:** real security headers; a section that evaluates the deployed
+site's real response headers; corrected `site.url`.
+
+**Outcome:** done; see [10](10-security-posture.md).

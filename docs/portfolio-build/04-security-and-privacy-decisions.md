@@ -14,10 +14,11 @@ no storage, and reads only `matchMedia` (screen width, pointer type,
 reduced-motion preference) to choose a layout. That is ordinary responsive
 rendering and is never recorded.
 
-## Portfolio security posture
+## Portfolio security posture (M6)
 
-Planned in M6: real security headers in `next.config` and a section that
-reports the deployed site's actual response headers.
+Real security headers are set in `next.config.ts`, and a section reports the
+deployed site's actual response headers. See
+[10-security-posture.md](10-security-posture.md).
 
 ## Public threat feed (M5)
 
