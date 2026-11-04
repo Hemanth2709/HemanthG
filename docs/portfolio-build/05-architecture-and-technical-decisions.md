@@ -41,3 +41,13 @@ scanning upload).
   under `prefers-reduced-motion`.
 - **Dependency added:** `vitest@3.2.4` (dev), with `npm test` and
   `vitest.config.ts`.
+
+## M4 decisions
+
+- **Plain three.js, not React Three Fiber.** `three@0.180.0` was already a
+  dependency. The scene is small (fewer than 20 meshes), so one imperative
+  `useEffect` with explicit disposal is simpler than adding R3F and Drei.
+- **One state, two renderings.** The 3D view takes `Graph` and `Evaluation`
+  as props; there is no 3D-specific model to keep in sync.
+- **Structure editing only in 2D.** Dragging in 3D is imprecise and hard to
+  make accessible; the brief asks for keyboard accessibility.

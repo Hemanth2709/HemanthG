@@ -10,3 +10,5 @@
 | 7 | React Flow's attribution badge is shown (MIT licence; the project asks for it unless you use their Pro plan) | M2 | Keep |
 | 9 | SSRF's target is modelled as the "Secrets manager" component, standing in for internal services and cloud metadata | M3 | A dedicated "internal service / metadata" component could be added |
 | 10 | The model is deliberately simplified: one shortest path, one entry point, no timing or probability | M3 | By design; it explains concepts, it does not score risk |
+| 11 | The 3D view does not follow the active step in Threat view (it highlights the whole path) | M4 | Small follow-up: emphasise the active step's box |
+| 12 | The 3D canvas is not keyboard-operable; the same information and selection are available in the 2D canvas and inspector | M4 | By design; documented in the canvas `aria-label` |

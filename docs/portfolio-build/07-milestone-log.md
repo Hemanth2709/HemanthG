@@ -30,3 +30,10 @@ privilege escalation scenarios; an input-allowlist control; per-scenario
 control placement; the DevSecOps pipeline view.
 
 **Outcome:** done; see [03](03-threatscape-interactions.md).
+
+## M4 · 3D view (2026-11-04)
+
+**Scope:** a lazy-loaded, layered three.js view of the shared graph state,
+desktop only, with selection synced to the inspector.
+
+**Outcome:** done; see [03](03-threatscape-interactions.md#3d-view-m4).

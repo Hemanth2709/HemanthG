@@ -29,3 +29,10 @@ Each entry records commands actually run and their real output.
 | Unit tests | `npm test` | 31/31 pass. New tests: all seven scenarios present; each has a path and is open on the default architecture; every control explained; no control marked as blocking DDoS; XSS monitoring inactive until monitoring observes the web app; rate limiting needs a gateway; SAST placed at the web app for XSS |
 | Types / build | `npx tsc --noEmit`, `npx next build` | Pass |
 | End to end | Playwright at 1440×1000, Defence view per scenario | XSS, IDOR, SSRF, credential exposure, privilege escalation: Attack succeeds → Blocked with their root-cause control. DDoS: Attack succeeds → Impact reduced (WAF). XSS monitoring shows "no runtime monitoring on the path". DevSecOps → SAST links to the Marketplace listing. No console errors |
+
+## M4 (2026-11-04)
+
+| Check | Command | Result |
+|---|---|---|
+| Types / build / unit tests | `npx tsc --noEmit`, `npx next build`, `npm test` | Pass; 31/31 |
+| 3D in a browser | Playwright with SwiftShader WebGL at 1440×1000: Threat view → 3D | Canvas renders. Labels "Browser · 01 … Database · 05" mark the path. Three JS chunks load only on the switch to 3D. Clicking the API box opens "API service" in the inspector. Back to 2D restores 8 nodes. No console errors |

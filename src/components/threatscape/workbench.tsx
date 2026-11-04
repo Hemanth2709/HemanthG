@@ -16,6 +16,7 @@ import {
   type NodeChange,
 } from "@xyflow/react";
 import { RotateCcw, Trash2 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { CATALOGUE, PALETTE_ORDER } from "@/lib/threatscape/catalogue";
@@ -27,6 +28,20 @@ import { ComponentNode, type ComponentNodeData } from "./component-node";
 import { ControlsPanel, ExplainerPanel, OutcomeBadge, ScenarioPanel } from "./panels";
 import { PipelineView } from "./pipeline-view";
 import { AVAILABLE_SCENARIOS, useThreatscape, type View } from "./use-threatscape";
+
+const Scene3D = dynamic(() => import("./scene3d"), {
+  ssr: false,
+  loading: () => <p className="p-4 font-mono text-xs text-subtle">Loading 3D view…</p>,
+});
+
+function hasWebGL(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
 
 const nodeTypes = { component: ComponentNode };
 const DRAG_TYPE = "application/x-threatscape-kind";
@@ -59,6 +74,9 @@ function Canvas() {
   const reducedMotion = usePrefersReducedMotion();
   const [selected, setSelected] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [dimension, setDimension] = useState<"2d" | "3d">("2d");
+  const [webgl, setWebgl] = useState(false);
+  useEffect(() => setWebgl(hasWebGL()), []);
 
   const showThreat = view !== "infrastructure";
   const path = evaluation.path ?? [];
@@ -204,7 +222,7 @@ function Canvas() {
           <select
             value={scenario.id}
             onChange={(event) => chooseScenario(event.target.value as ScenarioId)}
-            className="rounded-md border border-line-strong bg-surface px-2 py-1.5 text-[13px] text-foreground"
+            className="max-w-[15rem] rounded-md border border-line-strong bg-surface px-2 py-1.5 text-[13px] text-foreground"
           >
             {AVAILABLE_SCENARIOS.map((item) => (
               <option key={item.id} value={item.id}>
@@ -236,19 +254,43 @@ function Canvas() {
             </button>
           </div>
         ) : null}
+        {view !== "devsecops" ? (
+          <div className="ml-auto flex rounded-md border border-line-strong p-0.5" role="group" aria-label="Canvas dimension">
+            {(["2d", "3d"] as const).map((d) => (
+              <button
+                key={d}
+                type="button"
+                aria-pressed={dimension === d}
+                disabled={d === "3d" && !webgl}
+                title={d === "3d" && !webgl ? "3D needs WebGL, which this browser does not provide" : d === "3d" ? "Layered 3D view of the same architecture" : "Editable 2D canvas"}
+                onClick={() => setDimension(d)}
+                className={cn(
+                  "rounded px-2.5 py-1.5 font-mono text-[12px] uppercase transition-colors disabled:opacity-40",
+                  dimension === d ? "bg-raised text-foreground" : "text-muted hover:text-foreground",
+                )}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
+        ) : null}
         <button
           type="button"
           onClick={() => {
             reset();
             setSelected(null);
             setNotice(null);
-            void flow.fitView({ padding: 0.12, maxZoom: 1 });
+            if (dimension === "2d") void flow.fitView({ padding: 0.12, maxZoom: 1 });
           }}
-          className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-line-strong px-2.5 py-1.5 text-[13px] text-muted hover:text-foreground"
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-md border border-line-strong px-2.5 py-1.5 text-[13px] text-muted hover:text-foreground",
+            view === "devsecops" && "ml-auto",
+          )}
         >
           <RotateCcw className="size-3.5" />
           Reset
         </button>
+
       </div>
 
       {view === "devsecops" ? (
@@ -259,6 +301,15 @@ function Canvas() {
       <div className="grid h-[640px] grid-cols-[9rem_1fr_20rem]">
         {/* Palette */}
         <div className="overflow-y-auto border-r border-line p-3">
+          {dimension === "3d" ? (
+            <p className="text-[12.5px] leading-relaxed text-muted">
+              The 3D view stacks components by zone, from the internet up to data. Drag to orbit, scroll to zoom, click a component to inspect it.
+              <button type="button" onClick={() => setDimension("2d")} className="mt-2 block text-accent hover:text-accent-bright">
+                Switch to 2D to edit
+              </button>
+            </p>
+          ) : (
+          <>
           <p className="mb-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-subtle">Components</p>
           <ul className="flex flex-col gap-1">
             {PALETTE_ORDER.map((kind) => (
@@ -282,6 +333,8 @@ function Canvas() {
           <p className="mt-3 text-[11.5px] leading-relaxed text-subtle">
             Drag or click to add. Connect by dragging from a component&apos;s right edge to another&apos;s left edge. Delete removes the selection.
           </p>
+          </>
+          )}
         </div>
 
         {/* Canvas */}
@@ -302,6 +355,16 @@ function Canvas() {
             }
           }}
         >
+          {dimension === "3d" ? (
+            <Scene3D
+              graph={graph}
+              evaluation={evaluation}
+              showThreat={showThreat}
+              selected={selected}
+              onSelect={setSelected}
+              reducedMotion={reducedMotion}
+            />
+          ) : (
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -323,6 +386,7 @@ function Canvas() {
             <Background variant={BackgroundVariant.Lines} gap={28} color="#141a24" />
             <Controls showInteractive={false} />
           </ReactFlow>
+          )}
           {notice ? (
             <p role="status" className="absolute bottom-3 left-3 rounded-md border border-warn/40 bg-surface px-3 py-1.5 text-xs text-warn">
               {notice}

@@ -76,6 +76,28 @@ listing. Dependency scanning and runtime monitoring are reported as *not set
 up on this site yet*, and container scanning as *not applicable* (Vercel, no
 image).
 
-## Not yet
+## 3D view (M4)
 
-- The 3D view (M4).
+A **2D / 3D** switch in the workbench toolbar (Infrastructure, Threat and
+Defence views). `scene3d.tsx` renders the same `Graph` and `Evaluation`, so
+there is no separate 3D state:
+
+- components are boxes stacked on faint planes by zone: internet → edge →
+  app → data (platform components sit between edge and app);
+- request-flow edges are solid lines, observe/host edges dashed;
+- in the Threat and Defence views the attack path is drawn in the threat
+  colour. Blocking nodes turn the defence colour, unreached nodes fade, and
+  small pulses travel the path (not under reduced motion);
+- drag to orbit, scroll to zoom, click a component to open it in the shared
+  inspector. Labels are HTML (`CSS2DRenderer`), so they stay crisp and
+  readable.
+
+Editing stays in 2D, where it is precise and keyboard-accessible; the 3D
+palette column says so and offers "Switch to 2D to edit".
+
+**Loading and cost.** three.js is in its own chunk, downloaded only when 3D
+is chosen (verified: three new chunks appear on the first switch to 3D,
+none before). Rendering pauses when the canvas is off-screen or the tab is
+hidden. The pixel ratio is capped at 2. All geometry and materials are
+disposed on rebuild and unmount. The 3D button is disabled, with an
+explanation, when WebGL is unavailable.
