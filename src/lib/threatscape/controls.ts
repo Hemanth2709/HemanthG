@@ -41,7 +41,7 @@ export const CONTROLS: Record<ControlId, ControlDef> = {
     label: "SAST in CI",
     appliesTo: "api",
     summary: "Static analysis on every push flags dangerous code patterns before they are deployed.",
-    reduces: "Known vulnerable patterns reaching production. Sentinel Rules' sentinel-sql-injection-raw-query flags raw queries built from interpolated or concatenated strings.",
+    reduces: "Known vulnerable code patterns reaching production. Sentinel Rules covers SQL injection, XSS, SSRF, mass assignment, public secrets and more for NestJS and Next.js.",
     doesNotSolve: "Patterns the rules cannot see (for example SQL built in another file) and anything already deployed. It also needs someone to act on its findings.",
     related: { label: "Sentinel Rules (SAST for NestJS and Next.js)", href: SR },
   },
@@ -108,6 +108,14 @@ export const CONTROLS: Record<ControlId, ControlDef> = {
     summary: "Scan images for known vulnerabilities and misconfiguration before deployment.",
     reduces: "Known CVEs in base images and packages.",
     doesNotSolve: "Zero-days, and flaws in your own code.",
+  },
+  "input-allowlist": {
+    id: "input-allowlist",
+    label: "Input allowlist (DTO whitelist)",
+    appliesTo: "api",
+    summary: "Accept only declared fields: ValidationPipe({ whitelist: true }) or a schema that strips unknown keys.",
+    reduces: "Mass assignment: clients setting fields such as role or isAdmin.",
+    doesNotSolve: "Fields that are declared but should still not be user-editable, and authorization checks.",
   },
   "dependency-scanning": {
     id: "dependency-scanning",

@@ -87,3 +87,43 @@ describe("connectionError", () => {
     expect(connectionError(graph, "client", "web")).toBeNull();
   });
 });
+
+describe("all scenarios", () => {
+  const all = Object.values(SCENARIOS).filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+  it("covers the seven scenarios in the brief", () => {
+    expect(all.map((s) => s.id).sort()).toEqual(
+      ["credential-exposure", "ddos", "idor", "privilege-escalation", "sql-injection", "ssrf", "xss"].sort(),
+    );
+  });
+
+  it.each(all.map((s) => [s.id, s] as const))("%s has a path in the default architecture and is open with no controls", (_id, scenario) => {
+    const result = evaluate(defaultGraph(), scenario, none);
+    expect(result.path).not.toBeNull();
+    expect(result.outcome).toBe("open");
+  });
+
+  it.each(all.map((s) => [s.id, s] as const))("%s explains every control and never claims a single control fixes DDoS", (_id, scenario) => {
+    for (const item of scenario.controls) expect(item.note.length).toBeGreaterThan(20);
+    if (scenario.id === "ddos") expect(scenario.controls.every((item) => item.effect !== "blocks")).toBe(true);
+  });
+
+  it("XSS monitoring is inactive until monitoring observes the web app", () => {
+    const xss = SCENARIOS.xss!;
+    const on = new Set<ControlId>(["runtime-monitoring"]);
+    expect(evaluate(defaultGraph(), xss, on).inactive).toEqual(["runtime-monitoring"]);
+    const watched = connect(defaultGraph(), "monitor", "web");
+    expect(evaluate(watched, xss, on).outcome).toBe("detected");
+  });
+
+  it("rate limiting needs an API gateway on the path", () => {
+    const idor = SCENARIOS.idor!;
+    expect(evaluate(defaultGraph(), idor, new Set<ControlId>(["rate-limiting"])).inactive).toEqual(["rate-limiting"]);
+  });
+
+  it("SAST blocks XSS at the web app (control placed per scenario)", () => {
+    const result = evaluate(defaultGraph(), SCENARIOS.xss!, new Set<ControlId>(["sast"]));
+    expect(result.outcome).toBe("blocked");
+    expect(result.steps.find((step) => step.kind === "web")!.effects[0]!.control).toBe("sast");
+  });
+});

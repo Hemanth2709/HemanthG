@@ -5,6 +5,7 @@ import type { ScenarioId } from "@/lib/threatscape/types";
 import { cn } from "@/lib/utils";
 
 import { ControlsPanel, ScenarioPanel } from "./panels";
+import { PipelineView } from "./pipeline-view";
 import { AVAILABLE_SCENARIOS, useThreatscape } from "./use-threatscape";
 
 /**
@@ -58,6 +59,11 @@ export default function Stepper() {
 
       <ScenarioPanel scenario={scenario} evaluation={evaluation} activeStep={activeStep} onStep={setActiveStep} />
       <ControlsPanel scenario={scenario} applied={applied} inactive={evaluation.inactive} onToggle={toggleControl} />
+
+      <div className="border-t border-line pt-5">
+        <p className="mb-3 font-mono text-[10.5px] uppercase tracking-[0.14em] text-subtle">DevSecOps pipeline</p>
+        <PipelineView compact />
+      </div>
     </div>
   );
 }

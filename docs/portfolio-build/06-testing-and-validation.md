@@ -21,3 +21,11 @@ Each entry records commands actually run and their real output.
 | Build | `npx next build` | Pass; shared first-load JS 103 kB (React Flow is in a lazy chunk) |
 | End to end | Playwright script at 1440×1000: inspect API node; Threat view and step 4/5; Defence: parameterized queries; WAF only; connect Browser → Web app | Outcomes: Attack succeeds → Blocked; WAF only → Impact reduced; after bypass → Attack succeeds and "no waf on the path" shown. No console errors |
 | Small screen | Playwright 390×844, touch | Stepper renders, no React Flow in the DOM, no horizontal overflow |
+
+## M3 (2026-11-04)
+
+| Check | Command | Result |
+|---|---|---|
+| Unit tests | `npm test` | 31/31 pass. New tests: all seven scenarios present; each has a path and is open on the default architecture; every control explained; no control marked as blocking DDoS; XSS monitoring inactive until monitoring observes the web app; rate limiting needs a gateway; SAST placed at the web app for XSS |
+| Types / build | `npx tsc --noEmit`, `npx next build` | Pass |
+| End to end | Playwright at 1440×1000, Defence view per scenario | XSS, IDOR, SSRF, credential exposure, privilege escalation: Attack succeeds → Blocked with their root-cause control. DDoS: Attack succeeds → Impact reduced (WAF). XSS monitoring shows "no runtime monitoring on the path". DevSecOps → SAST links to the Marketplace listing. No console errors |

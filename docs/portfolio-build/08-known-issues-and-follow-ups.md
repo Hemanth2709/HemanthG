@@ -8,4 +8,5 @@
 | 4 | TracerFlow and AI Health Prediction not included | M1 | Waiting on details from the owner |
 | 6 | Small screens get the walk-through on the default architecture only; editing needs a larger screen | M2 | By design; documented in the UI |
 | 7 | React Flow's attribution badge is shown (MIT licence; the project asks for it unless you use their Pro plan) | M2 | Keep |
-| 8 | Only one scenario (SQL injection) | M2 | M3 |
+| 9 | SSRF's target is modelled as the "Secrets manager" component, standing in for internal services and cloud metadata | M3 | A dedicated "internal service / metadata" component could be added |
+| 10 | The model is deliberately simplified: one shortest path, one entry point, no timing or probability | M3 | By design; it explains concepts, it does not score risk |

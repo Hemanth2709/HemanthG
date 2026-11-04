@@ -22,3 +22,11 @@ writing → Contact. See [01](01-information-architecture.md) and
 
 **Outcome:** done; see [03](03-threatscape-interactions.md). The homepage
 now opens with Threatscape as section 01.
+
+## M3 · Scenarios and DevSecOps pipeline (2026-11-04)
+
+**Scope:** XSS, IDOR, SSRF, credential exposure, DDoS (conceptual) and
+privilege escalation scenarios; an input-allowlist control; per-scenario
+control placement; the DevSecOps pipeline view.
+
+**Outcome:** done; see [03](03-threatscape-interactions.md).

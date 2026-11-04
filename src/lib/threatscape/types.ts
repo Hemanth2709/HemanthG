@@ -83,7 +83,8 @@ export type ControlId =
   | "cdn-shield"
   | "iam-least-privilege"
   | "container-scanning"
-  | "dependency-scanning";
+  | "dependency-scanning"
+  | "input-allowlist";
 
 /** What a control does to the attack at the step where it applies. */
 export type Effect = "blocks" | "reduces" | "detects";
@@ -112,6 +113,8 @@ export interface ScenarioStep {
 export interface ScenarioControl {
   control: ControlId;
   effect: Effect;
+  /** Where the control acts in this scenario, if not its default component. */
+  at?: ComponentKind;
   /** Why this control has this effect in this scenario. */
   note: string;
 }

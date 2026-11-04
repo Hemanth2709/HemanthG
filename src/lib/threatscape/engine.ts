@@ -94,7 +94,7 @@ export function evaluate(graph: Graph, scenario: ScenarioDef, applied: ReadonlyS
 
   const inactive: ControlId[] = [];
   for (const item of relevant) {
-    const where = CONTROLS[item.control].appliesTo;
+    const where = item.at ?? CONTROLS[item.control].appliesTo;
     // Monitoring and container controls act on what they observe or host;
     // every other control acts at a component of its kind on the path.
     const targets = NON_FLOW.includes(where)

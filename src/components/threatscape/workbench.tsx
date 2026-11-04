@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils";
 
 import { ComponentNode, type ComponentNodeData } from "./component-node";
 import { ControlsPanel, ExplainerPanel, OutcomeBadge, ScenarioPanel } from "./panels";
+import { PipelineView } from "./pipeline-view";
 import { AVAILABLE_SCENARIOS, useThreatscape, type View } from "./use-threatscape";
 
 const nodeTypes = { component: ComponentNode };
@@ -35,6 +36,7 @@ const VIEWS: { id: View; label: string; hint: string }[] = [
   { id: "infrastructure", label: "Infrastructure", hint: "Build and inspect the architecture" },
   { id: "threat", label: "Threat", hint: "Walk the attack path step by step" },
   { id: "defence", label: "Defence", hint: "Apply controls and see what changes" },
+  { id: "devsecops", label: "DevSecOps", hint: "A secure delivery pipeline, stage by stage" },
 ];
 
 function usePrefersReducedMotion() {
@@ -197,7 +199,7 @@ function Canvas() {
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 text-[13px] text-muted">
+        <label className={cn("flex items-center gap-2 text-[13px] text-muted", view === "devsecops" && "invisible")}>
           Scenario
           <select
             value={scenario.id}
@@ -249,6 +251,11 @@ function Canvas() {
         </button>
       </div>
 
+      {view === "devsecops" ? (
+        <div className="min-h-[420px]">
+          <PipelineView />
+        </div>
+      ) : (
       <div className="grid h-[640px] grid-cols-[9rem_1fr_20rem]">
         {/* Palette */}
         <div className="overflow-y-auto border-r border-line p-3">
@@ -406,6 +413,7 @@ function Canvas() {
           )}
         </aside>
       </div>
+      )}
     </div>
   );
 }

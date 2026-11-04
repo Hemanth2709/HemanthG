@@ -225,7 +225,7 @@ export function ControlsPanel({
                 <span className="font-mono text-[10.5px] uppercase text-defence">{EFFECT_LABEL[item.effect]}</span>
                 {idle ? (
                   <span className="font-mono text-[10.5px] text-warn">
-                    no {CATALOGUE[control.appliesTo].label.toLowerCase()} on the path
+                    no {CATALOGUE[item.at ?? control.appliesTo].label.toLowerCase()} on the path
                   </span>
                 ) : null}
               </span>

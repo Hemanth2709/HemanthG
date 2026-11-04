@@ -6,7 +6,7 @@ import { defaultGraph, evaluate } from "@/lib/threatscape/engine";
 import { SCENARIOS } from "@/lib/threatscape/scenarios";
 import type { ControlId, Graph, ScenarioId } from "@/lib/threatscape/types";
 
-export type View = "infrastructure" | "threat" | "defence";
+export type View = "infrastructure" | "threat" | "defence" | "devsecops";
 
 export const AVAILABLE_SCENARIOS = Object.values(SCENARIOS).filter((s): s is NonNullable<typeof s> => Boolean(s));
 
