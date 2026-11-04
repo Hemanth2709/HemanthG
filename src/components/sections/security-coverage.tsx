@@ -8,7 +8,7 @@ export function Coverage() {
       <div className="mb-6 max-w-2xl">
         <h4 className="text-lg font-semibold tracking-tight text-foreground">What the rules catch</h4>
         <p className="mt-2 text-pretty text-sm leading-relaxed text-muted md:text-base">
-          Ten rules in v0.1.1. ERROR rules flag code that is unsafe as written. WARNING rules flag code a
+          Fourteen rules in v0.2.0. ERROR rules flag code that is unsafe as written. WARNING rules flag code a
           reviewer should check in context.
         </p>
       </div>
@@ -38,7 +38,7 @@ export function Coverage() {
 
       <div className="hidden overflow-x-auto rounded-lg border border-line-strong bg-background md:block">
         <table className="w-full text-left text-sm">
-          <caption className="sr-only">Rules in Sentinel-Security v0.1.1</caption>
+          <caption className="sr-only">Rules in Sentinel-Security v0.2.0</caption>
           <thead className="bg-raised font-mono text-xs text-subtle">
             <tr>
               <th scope="col" className="px-4 py-3 font-normal">Detects</th>

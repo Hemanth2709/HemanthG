@@ -20,7 +20,7 @@ const practice = [
     points: [
       "Sentinel-Security: SAST rules for NestJS and Next.js",
       "Every rule mapped to a CWE and an OWASP Top 10 category",
-      "Scans this site in CI on every push",
+      "Published as a GitHub Action; scans this site in CI on every push",
     ],
   },
   {
@@ -34,10 +34,10 @@ const practice = [
 ];
 
 const figures = [
-  { value: "10", label: "rules" },
-  { value: "94", label: "test cases" },
-  { value: "75%", label: "precision" },
-  { value: "65%", label: "recall" },
+  { value: "14", label: "rules" },
+  { value: "144", label: "test cases" },
+  { value: "74%", label: "precision" },
+  { value: "67%", label: "recall" },
 ];
 
 export function Security() {
@@ -72,13 +72,13 @@ export function Security() {
         </div>
 
         <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-4">
+          <Reveal className="min-w-0 lg:col-span-4">
             <p className="label">Evidence</p>
             <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-              Sentinel-Security v0.1.1
+              Sentinel-Security v0.2.0
             </h3>
             <p className="mt-4 text-pretty text-sm leading-relaxed text-muted">
-              Measured against a deliberately vulnerable NestJS and Next.js app with 26 planted vulnerabilities and 20
+              Measured against a deliberately vulnerable NestJS and Next.js app with 30 planted vulnerabilities and 24
               safe look-alikes, with each outcome predicted before the scan.
             </p>
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-6">
@@ -102,7 +102,7 @@ export function Security() {
             </a>
           </Reveal>
 
-          <div className="flex flex-col gap-14 lg:col-span-8">
+          <div className="flex min-w-0 flex-col gap-14 lg:col-span-8">
             <Benchmark />
             <Coverage />
           </div>

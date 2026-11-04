@@ -109,6 +109,8 @@ export interface CoverageRow {
 
 export interface BenchmarkRow {
   release: string;
+  /** Version of the benchmark app: planted vulnerabilities / safe look-alikes. */
+  app: string;
   findings: number;
   truePositives: number;
   falsePositives: number;
