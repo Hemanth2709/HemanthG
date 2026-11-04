@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 const dot: Record<ProjectStatus, string> = {
   Released: "bg-success",
   Live: "bg-success",
+  Private: "bg-violet",
   "Professional work": "bg-accent",
   "In progress": "bg-warn",
   Planned: "border border-faint bg-transparent",

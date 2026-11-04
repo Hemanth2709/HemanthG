@@ -60,7 +60,8 @@ export interface ExperienceEntry {
   technologies: string[];
 }
 
-export type ProjectStatus = "Released" | "Live" | "Professional work" | "In progress" | "Planned";
+/** "Private": built, but the source and deployment are not public. */
+export type ProjectStatus = "Released" | "Live" | "Private" | "Professional work" | "In progress" | "Planned";
 
 /** One box in a simplified architecture diagram. */
 export interface FlowNode {
