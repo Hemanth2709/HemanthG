@@ -52,3 +52,11 @@ unit-tested but not yet seen live; see [09](09-public-threat-intelligence.md).
 site's real response headers; corrected `site.url`.
 
 **Outcome:** done; see [10](10-security-posture.md).
+
+## M7 · Quality pass and handover (2026-11-04)
+
+**Scope:** linting, accessibility audit and fixes, performance, keyboard and
+reduced-motion checks, the implementation handover document.
+
+**Outcome:** done; results in [06](06-testing-and-validation.md#m7-2026-11-04),
+handover in [IMPLEMENTATION-HANDOVER.md](IMPLEMENTATION-HANDOVER.md).

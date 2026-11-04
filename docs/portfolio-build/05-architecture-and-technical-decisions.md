@@ -64,3 +64,37 @@ scanning upload).
 - Optional environment variables: `NVD_API_KEY` (higher NVD rate limit) and
   `GITHUB_TOKEN` (a fine-grained token with no permissions, for the advisory
   API's authenticated rate limit). Neither is required.
+
+## M6 decisions
+
+- **Headers in `next.config.ts`** (`headers()`), so they apply to every
+  route on any host. CSP keeps `'unsafe-inline'` for scripts: the page is
+  statically generated with ISR, so there is no per-request nonce. The
+  posture section reports this as Partial rather than hiding it.
+- **Posture check fetches the deployed site server-side**, from
+  `POSTURE_URL`, else Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, else
+  `site.url`. Evaluation (`src/lib/posture/evaluate.ts`) is a pure function;
+  a check that cannot run is "unknown", never "pass".
+
+## M7 decisions
+
+- **Scroll reveal is CSS only.** The old `Reveal` was a client component
+  with an IntersectionObserver per instance; hydrating dozens of them cost
+  mobile Total Blocking Time (Lighthouse mobile performance 84, TBT 420 ms).
+  It is now a server component that adds a `.reveal` class; the animation is
+  a scroll-driven `animation-timeline: view()` inside
+  `@supports (animation-timeline: view())` and
+  `prefers-reduced-motion: no-preference`. Browsers without support, and
+  visitors with JavaScript off, just see the content. The `<noscript>`
+  style that used to un-hide content was removed because nothing is hidden
+  without the animation.
+- **ESLint added** (`eslint@9.36.0`, `eslint-config-next@15.5.4`,
+  `@eslint/eslintrc@3.3.1`, exact versions) with a flat config
+  (`eslint.config.mjs`) extending `next/core-web-vitals` and
+  `next/typescript`. `npm run lint` now runs `eslint .`.
+- **Accessibility fixes from axe:** small text moved from `text-faint` to
+  `text-subtle` where contrast fell short; the Inspector became a
+  `role="region"` instead of a nested `<aside>`; React Flow nodes and edges
+  get a visible `:focus-visible` outline; the React Flow attribution badge
+  is restyled for contrast; the navbar home link uses `title` instead of an
+  `aria-label` that did not match its visible text.

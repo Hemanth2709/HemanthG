@@ -54,3 +54,21 @@ Each entry records commands actually run and their real output.
 | CSP compatibility | Re-ran the M2, M3 and M4 Playwright scripts with CSP on | Same outcomes, no console errors or CSP violations |
 | Posture section | Playwright | Reports the live production site: HTTPS and HSTS present, four headers missing (the deployed version predates this change) |
 | Layout | Playwright full page at 1440, 820, 390 px | No overflow, after fixing the stepper's scenario select (was 398 px wide at 390 px) |
+
+## M7 (2026-11-04)
+
+| Check | Command | Result |
+|---|---|---|
+| Lint | `npm run lint` | Pass, 0 problems (after fixing 3 unescaped apostrophes, 1 `useMemo` dependency warning and the config's anonymous default export) |
+| Unit tests | `npm test` | 47/47 pass (3 files) |
+| Types | `npx tsc --noEmit` | Pass |
+| Build | `npx next build` | Pass; `/` is ISR (Revalidate 6h), 11.4 kB route, 115 kB first-load JS |
+| Accessibility | axe-core 4.10.3 via Playwright, full page, 1440×900 and 390×844, Threatscape loaded | 0 violations on both (54 and 51 passing rules), after the fixes in [05](05-architecture-and-technical-decisions.md#m7-decisions). Re-run on the final build |
+| Lighthouse desktop | Lighthouse 12.6.1, production server on localhost | Performance 100, Accessibility 100, Best practices 100, SEO 100 |
+| Lighthouse mobile | Lighthouse 12.6.1, default mobile throttling | Before CSS reveal: Performance 84 (TBT 420 ms). After: Performance 94–95 across runs (LCP 2.5–2.6 s, TBT 160–190 ms, CLS 0); Accessibility, Best practices and SEO 100 |
+| Keyboard | Playwright script at 1440×1000 | Tab from Infrastructure reaches the Threat tab and Enter selects it; Enter on the palette's "API gateway" button adds a node (8 → 9) and opens it in the Inspector; a focused canvas node shows a 3 px solid outline. Other controls are native buttons, selects and checkboxes but were not each driven by keyboard in a script |
+| Reduced motion | Same script, `reducedMotion: "reduce"` | 0 animated edges in Threat view. 3D pulses and the reveal animation are gated on the same preference in code (`scene3d.tsx`, `globals.css`) but were not measured separately |
+| Layout | Playwright full page at 1440, 820 and 390 px | No horizontal overflow |
+
+Lighthouse runs locally do not include Vercel's CDN, so field numbers on the
+deployed site will differ.

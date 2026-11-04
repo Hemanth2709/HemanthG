@@ -39,7 +39,7 @@ export function Projects() {
                 Planned projects
               </h3>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
-                Blueprints, not finished work. Each moves up to the list above only once it's built and tested.
+                Blueprints, not finished work. Each moves up to the list above only once it&apos;s built and tested.
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@ export function Projects() {
                 <p className="mt-4 text-lg font-medium text-foreground">{item.name}</p>
                 <p className="mt-1 font-mono text-xs text-subtle">{item.category}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.summary}</p>
-                <p className="mt-4 font-mono text-[11px] text-faint">{item.technologies.join(" · ")}</p>
+                <p className="mt-4 font-mono text-[11px] text-subtle">{item.technologies.join(" · ")}</p>
               </li>
             ))}
           </ul>

@@ -25,8 +25,8 @@ export function Contact() {
             Have an interesting engineering problem?
           </h2>
           <p className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-muted md:text-lg">
-            I'm looking for cloud, DevOps and full stack roles where I own infrastructure as well as code, remote or in
-            Bengaluru. Longer term I'm building towards security, starting with identity and access management and
+            I&apos;m looking for cloud, DevOps and full stack roles where I own infrastructure as well as code, remote or in
+            Bengaluru. Longer term I&apos;m building towards security, starting with identity and access management and
             DevSecOps.
           </p>
         </Reveal>

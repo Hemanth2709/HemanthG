@@ -93,10 +93,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plexMono.variable}`}>
       <body>
-        {/* Without JavaScript, scroll reveals never fire: show everything. */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
         <PersonJsonLd />
         {children}
       </body>

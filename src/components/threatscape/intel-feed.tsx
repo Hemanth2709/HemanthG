@@ -32,7 +32,7 @@ function Column({ result }: { result: IntelResult }) {
                     {item.title}
                     <ArrowUpRight aria-hidden className="ml-1 inline size-3 text-subtle" />
                   </span>
-                  <span className="mt-1 block font-mono text-[10.5px] text-faint">
+                  <span className="mt-1 block font-mono text-[10.5px] text-subtle">
                     {[
                       item.product,
                       item.added ? `added ${item.added}` : undefined,

@@ -52,7 +52,7 @@ export const ComponentNode = memo(function ComponentNode({ data, selected }: Nod
           </span>
         ) : null}
       </div>
-      <p className="mt-0.5 font-mono text-[10.5px] text-subtle">{def.tech}</p>
+      <p className={cn("mt-0.5 font-mono text-[10.5px]", onPath ? "text-muted" : "text-subtle")}>{def.tech}</p>
       {showThreat && effect ? (
         <p className="mt-1.5 font-mono text-[10px] uppercase tracking-wider text-defence">
           {effect === "blocks" ? "blocked here" : effect === "reduces" ? "reduced here" : "detected here"}

@@ -2,8 +2,8 @@
 
 | # | Issue | Since | Plan |
 |---|---|---|---|
-| 1 | No lint configuration (`next lint` prompts for setup) | Before M1 | Add ESLint flat config in M7 |
-| 2 | No automated tests for UI components; only the engine is unit-tested | M2 | Add component tests in M7 if time allows |
+| 1 | ~~No lint configuration~~ | Before M1 | Resolved in M7: ESLint flat config, `npm run lint` passes |
+| 2 | No automated UI component tests; engine, intel fetchers and posture evaluation are unit-tested (47 tests) and the UI was checked with Playwright scripts that are not in the repo | M2 | Not done in M7. Follow-up: commit Playwright end-to-end tests and run them in CI |
 | 3 | Research & writing lists repository documents only; there are no articles yet | M1 | Add articles when the owner publishes them |
 | 4 | TracerFlow and AI Health Prediction not included | M1 | Waiting on details from the owner |
 | 6 | Small screens get the walk-through on the default architecture only; editing needs a larger screen | M2 | By design; documented in the UI |
@@ -17,3 +17,5 @@
 | 15 | CSP allows `'unsafe-inline'` scripts (static generation, no nonce) | M6 | Reported as Partial on the site; a nonce CSP would need dynamic rendering |
 | 16 | The posture section shows the previous deployment's headers until the page regenerates after deploying (up to 6 hours) | M6 | Expected with ISR; trigger a redeploy to refresh sooner |
 | 17 | Vercel preview deployments use the toolbar script from vercel.live, which the CSP blocks on previews | M6 | Production is unaffected; allow `https://vercel.live` only if the toolbar is wanted on previews |
+| 18 | The `site.url` was changed from `hemanthg.dev` (does not resolve) to `https://hemanth-g-portfolio.vercel.app` | M6 | Owner to confirm, or supply a custom domain |
+| 19 | The scroll reveal needs scroll-driven animation support (Chromium 115+, Safari 26); elsewhere content appears without animation | M7 | By design |

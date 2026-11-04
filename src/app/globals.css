@@ -220,3 +220,35 @@ body {
   animation: breathe 4s ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
+
+/* React Flow attribution badge: keep it, at readable contrast (WCAG AA). */
+.react-flow__attribution {
+  background: rgba(16, 20, 28, 0.85) !important;
+}
+.react-flow__attribution a {
+  color: var(--color-muted) !important;
+}
+
+/* Visible keyboard focus on canvas nodes and edges (React Flow removes it). */
+.react-flow__node:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+.react-flow__edge:focus-visible .react-flow__edge-path {
+  stroke: var(--color-accent) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Scroll reveal without JavaScript (src/components/effects/reveal.tsx).
+   Only where scroll-driven animations exist and motion is welcome;
+   otherwise content is static and fully visible. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}

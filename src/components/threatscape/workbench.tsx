@@ -79,7 +79,7 @@ function Canvas() {
   useEffect(() => setWebgl(hasWebGL()), []);
 
   const showThreat = view !== "infrastructure";
-  const path = evaluation.path ?? [];
+  const path = useMemo(() => evaluation.path ?? [], [evaluation.path]);
   const pathEdges = useMemo(() => {
     const set = new Set<string>();
     for (let i = 0; i < path.length - 1; i += 1) set.add(`${path[i]}->${path[i + 1]}`);
@@ -408,7 +408,7 @@ function Canvas() {
         </div>
 
         {/* Inspector */}
-        <aside className="overflow-y-auto border-l border-line p-4" aria-label="Inspector">
+        <div role="region" className="overflow-y-auto border-l border-line p-4" aria-label="Inspector">
           {selectedNode ? (
             <div className="flex flex-col gap-5">
               <ExplainerPanel kind={selectedNode.kind} />
@@ -475,7 +475,7 @@ function Canvas() {
               <ControlsPanel scenario={scenario} applied={applied} inactive={evaluation.inactive} onToggle={toggleControl} />
             </div>
           )}
-        </aside>
+        </div>
       </div>
       )}
     </div>

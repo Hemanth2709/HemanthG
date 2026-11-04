@@ -62,7 +62,7 @@ export function Navbar() {
       style={{ "--enter-delay": "0s", animationDuration: "0.5s" } as React.CSSProperties}
     >
       <nav className="container-site flex h-16 items-center justify-between gap-6" aria-label="Primary">
-        <a href="#home" aria-label={`${site.name}, back to top`} className="rounded-md">
+        <a href="#home" title="Back to top" className="rounded-md">
           <Wordmark />
         </a>
 
