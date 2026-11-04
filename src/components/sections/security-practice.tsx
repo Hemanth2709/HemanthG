@@ -1,7 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/effects/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
 
 import { Benchmark } from "./security-benchmark";
 import { Coverage } from "./security-coverage";
@@ -40,21 +39,9 @@ const figures = [
   { value: "67%", label: "recall" },
 ];
 
-export function Security() {
+/** Day-job, open-source and learning columns, shown in Engineering Journey. */
+export function SecurityPractice() {
   return (
-    <section
-      id="security"
-      className="relative scroll-mt-20 border-t border-line bg-surface/40 py-24 md:py-36"
-      aria-label="Security"
-    >
-      <div className="container-site">
-        <SectionHeading
-          index="05"
-          label="Security"
-          title={["Security should be part of engineering,", "not an afterthought."]}
-          description="Security has grown out of my engineering work rather than replacing it. This is what I've done so far, and the evidence for it."
-        />
-
         <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">
           {practice.map((column, index) => (
             <Reveal key={column.title} delay={index * 0.05} className="bg-background p-6 md:p-8">
@@ -70,8 +57,13 @@ export function Security() {
             </Reveal>
           ))}
         </div>
+  );
+}
 
-        <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-10">
+/** Sentinel-Security figures, benchmark and rule tables, shown in Selected Work. */
+export function SentinelEvidence() {
+  return (
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <Reveal className="min-w-0 lg:col-span-4">
             <p className="label">Evidence</p>
             <h3 className="mt-4 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
@@ -107,7 +99,5 @@ export function Security() {
             <Coverage />
           </div>
         </div>
-      </div>
-    </section>
   );
 }

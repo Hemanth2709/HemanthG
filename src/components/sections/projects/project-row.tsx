@@ -19,7 +19,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
           <span className="mx-2 text-faint">/</span>
           {project.category}
         </p>
-        <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-foreground transition-colors duration-300 md:text-4xl">
+        <h3 className="mt-4 font-display text-3xl font-semibold tracking-[-0.03em] text-foreground transition-colors duration-300 md:text-4xl">
           {project.name}
         </h3>
         <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">

@@ -1,21 +1,13 @@
 import { Reveal } from "@/components/effects/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { TagList } from "@/components/ui/tag";
 import { learning, skills } from "@/data/skills";
 
-export function Skills() {
+export function SkillsBody() {
   return (
-    <section id="skills" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="Skills">
-      <div className="container-site">
-        <SectionHeading
-          index="04"
-          label="Skills"
-          title={["Capabilities,", "grouped by what they're for."]}
-          description="No ratings. Each group notes where the skill was used."
-        />
+    <>
 
         <Reveal>
-          <dl className="border-t border-line">
+          <dl>
             {skills.map((domain) => (
               <div
                 key={domain.title}
@@ -43,7 +35,6 @@ export function Skills() {
             </div>
           </dl>
         </Reveal>
-      </div>
-    </section>
+    </>
   );
 }

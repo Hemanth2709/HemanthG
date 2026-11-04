@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
 
 import { site, socials } from "@/data/site";
 
@@ -17,10 +17,20 @@ const inter = Inter({
   display: "optional",
 });
 
-const jetbrains = JetBrains_Mono({
+/** Display face for headings (docs/portfolio-build/02-visual-system.md). */
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-space-grotesk",
   display: "optional",
+  weight: ["500", "600"],
+});
+
+/** Monospace for small technical labels and code only. */
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
+  display: "optional",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -81,7 +91,7 @@ function PersonJsonLd() {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plexMono.variable}`}>
       <body>
         {/* Without JavaScript, scroll reveals never fire: show everything. */}
         <noscript>

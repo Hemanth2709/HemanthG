@@ -19,7 +19,7 @@ export function SectionHeading({ index, label, title, description, className }: 
         <span aria-hidden className="h-px w-8 bg-line-strong" />
         {label}
       </p>
-      <h2 className="mt-6 max-w-4xl text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-foreground md:text-5xl">
+      <h2 className="mt-6 max-w-4xl text-balance font-display text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-foreground md:text-5xl">
         {title.map((line, i) => (
           <span key={line} className={i === 0 ? "block" : "block text-muted"}>
             {line}

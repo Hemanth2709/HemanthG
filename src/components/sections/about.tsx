@@ -1,12 +1,9 @@
 import { Reveal } from "@/components/effects/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { about, achievements, education, languages, timeline } from "@/data/about";
 
-export function About() {
+export function AboutBody() {
   return (
-    <section id="about" className="scroll-mt-20 border-t border-line py-24 md:py-36" aria-label="About">
-      <div className="container-site">
-        <SectionHeading index="01" label="About" title={about.headline} />
+    <>
 
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col gap-5 lg:col-span-7 lg:col-start-1">
@@ -81,7 +78,6 @@ export function About() {
             })}
           </ol>
         </Reveal>
-      </div>
-    </section>
+    </>
   );
 }

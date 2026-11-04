@@ -25,9 +25,19 @@
   --color-error: #f87171;
   --color-warn: #fbbf24;
 
+  /* Semantic roles (docs/portfolio-build/02-visual-system.md): a restrained
+     warm tone marks threats and attack paths; the blue accent marks
+     defensive controls. Neither is used decoratively. */
+  --color-threat: #e8875f;
+  --color-threat-dim: rgba(232, 135, 95, 0.12);
+  --color-defence: #65a9ff;
+  --color-defence-dim: rgba(101, 169, 255, 0.1);
+  --color-metal: #c3ccd8;
+
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);

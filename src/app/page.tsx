@@ -5,15 +5,14 @@ import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/hero";
 
 /**
- * Below-the-fold sections are code-split: they still server-render (full
- * HTML for SEO) but their client JS loads in separate chunks. The
- * `cv-auto` wrappers skip layout and paint for off-screen sections.
+ * Homepage flow (docs/portfolio-build/01-information-architecture.md):
+ * Hero → Selected Work → Engineering Journey → Research & Writing → Contact.
+ * Below-the-fold sections are code-split; they still server-render, and the
+ * `cv-auto` wrappers skip layout and paint while off-screen.
  */
-const About = dynamic(() => import("@/components/sections/about").then((m) => m.About));
-const Experience = dynamic(() => import("@/components/sections/experience").then((m) => m.Experience));
 const Projects = dynamic(() => import("@/components/sections/projects").then((m) => m.Projects));
-const Skills = dynamic(() => import("@/components/sections/skills").then((m) => m.Skills));
-const Security = dynamic(() => import("@/components/sections/security").then((m) => m.Security));
+const Journey = dynamic(() => import("@/components/sections/journey").then((m) => m.Journey));
+const Writing = dynamic(() => import("@/components/sections/writing").then((m) => m.Writing));
 const Contact = dynamic(() => import("@/components/sections/contact").then((m) => m.Contact));
 
 export default function HomePage() {
@@ -29,19 +28,13 @@ export default function HomePage() {
       <main id="main">
         <Hero />
         <div className="cv-auto">
-          <About />
-        </div>
-        <div className="cv-auto">
-          <Experience />
-        </div>
-        <div className="cv-auto">
           <Projects />
         </div>
         <div className="cv-auto">
-          <Skills />
+          <Journey />
         </div>
         <div className="cv-auto">
-          <Security />
+          <Writing />
         </div>
         <div className="cv-auto">
           <Contact />

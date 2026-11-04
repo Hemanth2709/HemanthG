@@ -17,11 +17,11 @@ export function Contact() {
       <div className="container-site relative">
         <Reveal>
           <p className="label flex items-center gap-3">
-            <span className="text-accent">06</span>
+            <span className="text-accent">04</span>
             <span aria-hidden className="h-px w-8 bg-line-strong" />
             Contact
           </p>
-          <h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-foreground md:text-7xl">
+          <h2 className="mt-6 max-w-4xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-foreground md:text-7xl">
             Have an interesting engineering problem?
           </h2>
           <p className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-muted md:text-lg">
